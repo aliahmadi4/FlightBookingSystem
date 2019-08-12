@@ -2,8 +2,12 @@ package com.aerotravel.flightticketbooking.controller;
 
 import com.aerotravel.flightticketbooking.model.Aircraft;
 import com.aerotravel.flightticketbooking.model.Airport;
+import com.aerotravel.flightticketbooking.model.Flight;
 import com.aerotravel.flightticketbooking.services.AircraftService;
 import com.aerotravel.flightticketbooking.services.AirportService;
+import com.aerotravel.flightticketbooking.services.FlightService;
+import com.aerotravel.flightticketbooking.services.servicesimpl.FlightServiceImpl;
+import com.zaxxer.hikari.util.FastList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +27,9 @@ public class MainController {
     AirportService airportService;
     @Autowired
     AircraftService aircraftService;
+    @Autowired
+    FlightService flightService;
+
 
     @GetMapping("/")
     public String showHomePage(){
@@ -39,6 +46,7 @@ public class MainController {
     public String saveAirport(@Valid @ModelAttribute("airport") Airport airport, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("airport", new Airport());
             return "newAirport";
         }
         airportService.saveAirport(airport);
@@ -61,7 +69,8 @@ public class MainController {
     @PostMapping("/aircraft/new")
     public String saveAircraft(@Valid @ModelAttribute("aircraft") Aircraft aircraft, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            model.addAttribute("aircraft", bindingResult.getAllErrors());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("aircraft", new Aircraft());
             return "newAircraft";
         }
         aircraftService.saveAircraft(aircraft);
@@ -75,7 +84,34 @@ public class MainController {
         return "aircrafts";
     }
 
+    @GetMapping("/flight/new")
+    public String showNewFlightPage(Model model){
+        model.addAttribute("flight", new Flight());
+        model.addAttribute("aircrafts", aircraftService.getAllAircrafts());
+        model.addAttribute("airports", airportService.getAllAirports());
+        return "newFlight";
+    }
 
+    @PostMapping("/flight/new")
+    public String saveFlight(@Valid @ModelAttribute("flight") Flight flight, BindingResult bindingResult,
+                             @RequestParam("departureAirport") int departureAirport,
+                             @RequestParam("destinationAirport") int destinationAirport,
+                             @RequestParam("aircraft") long aircraftId,
+                             Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("flight", new Flight());
+            model.addAttribute("aircrafts", aircraftService.getAllAircrafts());
+            model.addAttribute("airports", airportService.getAllAirports());
+            return "newFlight";
+        }
+        Flight flight1 = flight;
+        flight.setAircraft(aircraftService.getAircraftById(aircraftId));
+        flight.setDepartureAirport(airportService.getAirportById(departureAirport));
+        flight.setDestinationAirport(airportService.getAirportById(destinationAirport));
+        flightService.saveFlight(flight);
+        return "index";
+    }
 
 
 
