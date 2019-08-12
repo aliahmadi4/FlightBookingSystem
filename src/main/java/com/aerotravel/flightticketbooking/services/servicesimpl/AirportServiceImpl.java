@@ -38,11 +38,11 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Airport saveAirport(Airport airport) {
-        return null;
+        return airportRepository.save(airport);
     }
 
     @Override
-    public void deleteAirport(Long airpportId) {
-
+    public void deleteAirport(Integer airportId) {
+        airportRepository.deleteById(airportId);
     }
 }
