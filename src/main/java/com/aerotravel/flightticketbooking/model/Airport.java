@@ -13,6 +13,7 @@ public class Airport {
     @GeneratedValue
     private int airportId;
     private String airportCode;
+    private String airportName;
     private String city;
     private String state;
     private String country;
@@ -92,5 +93,13 @@ public class Airport {
 
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
+    }
+
+    public String getAirportName() {
+        return airportName;
+    }
+
+    public void setAirportName(String airportName) {
+        this.airportName = airportName;
     }
 }
