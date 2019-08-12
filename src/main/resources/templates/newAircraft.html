@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/master-page}">
+
+<body>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <h1 style="color: darkblue">Add New Aircraft </h1>
+            </div>
+
+        </div>
+    </div>
+
+    <form action="/aircraft/new" method="post" th:object="${aircraft}">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label class="col-form-label" for="manufacturer">Manufacturer</label>
+                    <span th:if="${#fields.hasErrors('manufacturer')}" th:errors="*{manufacturer}"
+                          class="badge badge-danger"></span>
+                    <input type="text" class="form-control" placeholder="" id="manufacturer"
+                           name="manufacturer" th:value="${aircraft.manufacturer}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label" for="model">Model</label>
+                    <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}"
+                          class="badge badge-danger"></span>
+                    <input type="text" class="form-control" placeholder="" id="model"
+                           name="model" th:value="${aircraft.model}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label" for="numberOfSeats">Number of seats</label>
+                    <span th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}"
+                          class="badge badge-danger"></span>
+                    <input type="text" class="form-control" placeholder="" id="numberOfSeats"
+                           name="numberOfSeats" th:value="${aircraft.numberOfSeats}" required>
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" style="float: right">Save</button>
+                </div>
+
+                
+            </div>
+
+        </div>
+    </form>
+
+</th:block>
+</body>
+</html>

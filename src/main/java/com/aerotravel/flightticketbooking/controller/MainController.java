@@ -11,8 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 @Controller
 public class MainController {
@@ -43,6 +45,13 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/airports")
+    public String showAirportsList(@RequestParam(defaultValue = "0") int pageNo, Model model){
+        model.addAttribute("airports", airportService.getAllAirportsPaged(pageNo));
+        model.addAttribute("currentPage", pageNo);
+        return "airports";
+    }
+
     @GetMapping("/aircraft/new")
     public String showAddAircraftPage(Model model) {
         model.addAttribute("aircraft", new Aircraft());
@@ -58,6 +67,16 @@ public class MainController {
         aircraftService.saveAircraft(aircraft);
         return "index";
     }
+
+    @GetMapping("/aircrafts")
+    public String showAircraftsList(@RequestParam(defaultValue = "0") int pageNo, Model model){
+        model.addAttribute("aircrafts", aircraftService.getAllAircraftsPaged(pageNo));
+        model.addAttribute("currentPage", pageNo);
+        return "aircrafts";
+    }
+
+
+
 
 
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/master-page}">
+<meta charset="UTF-8">
+<title>Customers</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row"  style="margin-bottom: 10px">
+        <div class="col-md-6">
+            <h1 style="color: darkblue">Aircrafts List </h1>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-outline-primary" style="float: right"><a href="/aircraft/new">Add Aircraft</a></button>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr class="table-active">
+            <th scope="col">ID</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Model</th>
+            <th scope="col">Number of seats</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="aircraft, iterStat:${aircrafts}">
+            <tr class="table-primary">
+                <th scope="row" th:text="${aircraft.aircraftId}">Dark</th>
+                <td th:text="${aircraft.manufacturer}"></td>
+                <td th:text="${aircraft.model}"></td>
+                <td th:text="${aircraft.numberOfSeats}"></td>
+                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">Delete</a></td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+    <div>
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Pages:</a>
+            </li>
+            <th:block th:each="i:${#numbers.sequence(1,aircrafts.totalPages)}">
+                <li th:class="${currentPage}==(${i-1}) ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{/aircraft(pageNo=(${i-1}))}" th:text="${i}"></a>
+                </li>
+            </th:block>
+        </ul>
+
+
+    </div>
+</th:block>
+</body>
+</html>
