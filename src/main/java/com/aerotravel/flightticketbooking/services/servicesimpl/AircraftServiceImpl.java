@@ -28,21 +28,21 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public List<Aircraft> getAllAircrafts() {
-        return null;
+        return aircraftRepository.findAll();
     }
 
     @Override
     public Aircraft getAircraftById(Long aircraftId) {
-        return null;
+        return aircraftRepository.findById(aircraftId).orElse(null);
     }
 
     @Override
     public Aircraft saveAircraft(Aircraft aircraft) {
-        return null;
+        return aircraftRepository.save(aircraft);
     }
 
     @Override
     public void deleteAircraftById(Long aircraftId) {
-
+        aircraftRepository.deleteById(aircraftId);
     }
 }
