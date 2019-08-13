@@ -1,8 +1,10 @@
 package com.aerotravel.flightticketbooking.services;
 
+import com.aerotravel.flightticketbooking.model.Airport;
 import com.aerotravel.flightticketbooking.model.Flight;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightService {
@@ -11,4 +13,5 @@ public interface FlightService {
     public abstract Flight getFlightById(Long flightId);
     public abstract Flight saveFlight(Flight flight);
     public abstract void deleteFlightById(Long flightId);
+    public abstract List<Flight> getAllFlightsByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depTime);
 }
