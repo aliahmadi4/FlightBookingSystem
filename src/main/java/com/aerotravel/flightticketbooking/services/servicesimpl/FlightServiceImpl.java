@@ -21,7 +21,7 @@ public class FlightServiceImpl implements FlightService {
     }
     @Override
     public Page<Flight> getAllFlightsPaged(int pageNum) {
-        return flightRepository.findAll(PageRequest.of(pageNum,5, Sort.by("")));
+        return flightRepository.findAll(PageRequest.of(pageNum,5, Sort.by("departureAirport")));
     }
 
     @Override

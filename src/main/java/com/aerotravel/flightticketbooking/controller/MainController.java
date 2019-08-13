@@ -113,6 +113,11 @@ public class MainController {
         return "index";
     }
 
-
+    @GetMapping("/flights")
+    public String showFlightsList(@RequestParam(defaultValue = "0") int pageNo, Model model){
+        model.addAttribute("flights", flightService.getAllFlightsPaged(pageNo));
+        model.addAttribute("currentPage", pageNo);
+        return "flights";
+    }
 
 }

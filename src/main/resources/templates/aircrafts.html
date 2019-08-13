@@ -45,7 +45,7 @@
             </li>
             <th:block th:each="i:${#numbers.sequence(1,aircrafts.totalPages)}">
                 <li th:class="${currentPage}==(${i-1}) ? 'page-item active' : 'page-item'">
-                    <a class="page-link" th:href="@{/aircraft(pageNo=(${i-1}))}" th:text="${i}"></a>
+                    <a class="page-link" th:href="@{/aircrafts(pageNo=(${i-1}))}" th:text="${i}"></a>
                 </li>
             </th:block>
         </ul>
