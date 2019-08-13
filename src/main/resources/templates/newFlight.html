@@ -18,7 +18,7 @@
         <div class="row">
 
 
-            <div class="from-group col-md-6">
+            <div class="from-group col-md-4">
                 <label class="col-form-label" for="aircraft">Aircraft</label>
                 <span th:if="${#fields.hasErrors('aircraft')}" th:errors="*{aircraft}"
                       class="badge badge-danger"></span>
@@ -30,7 +30,7 @@
             </div>
 
 
-            <div class="from-group col-md-6">
+            <div class="from-group col-md-4">
                 <label class="col-form-label" for="departureAirport">Departure Airport</label>
                 <span th:if="${#fields.hasErrors('departureAirport')}" th:errors="*{departureAirport}"
                       class="badge badge-danger"></span>
@@ -41,7 +41,7 @@
                 </select>
             </div>
 
-            <div class="from-group col-md-6">
+            <div class="from-group col-md-4">
                 <label class="col-form-label" for="destinationAirport">Destination Airport</label>
                 <span th:if="${#fields.hasErrors('destinationAirport')}" th:errors="*{destinationAirport}"
                       class="badge badge-danger"></span>

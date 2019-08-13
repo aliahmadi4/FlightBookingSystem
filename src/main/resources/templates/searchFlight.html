@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/master-page}">
+
+<body>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <h1 style="color: darkblue">Search a Flight</h1>
+            </div>
+
+        </div>
+    </div>
+
+    <form action="/flight/new" method="post">
+        <div class="row">
+
+
+            <div class="from-group col-md-4">
+                <label class="col-form-label" for="departureAirport">From</label>
+                <select class="form-control" id="departureAirport" name="departureAirport">
+                    <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
+                            th:value="${airport.airportId}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="from-group col-md-4">
+                <label class="col-form-label" for="destinationAirport">To</label>
+                <select class="form-control" id="destinationAirport" name="destinationAirport">
+                    <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
+                            th:value="${airport.airportId}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="departureTime">Departure Time</label>
+                <span th:if="${departureTimeError}" th:value="${departureTimeError}"
+                      class="badge badge-danger"></span>
+                <input type="date" class="form-control" placeholder="" id="departureTime"
+                       name="departureTime">
+            </div>
+
+
+            <div class="form-group col-12">
+                <button type="submit" class="btn btn-success" style="float: right">Search</button>
+            </div>
+
+        </div>
+    </form>
+
+</th:block>
+</body>
+</html>

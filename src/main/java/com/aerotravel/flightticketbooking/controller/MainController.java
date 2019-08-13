@@ -8,10 +8,12 @@ import com.aerotravel.flightticketbooking.services.AirportService;
 import com.aerotravel.flightticketbooking.services.FlightService;
 import com.aerotravel.flightticketbooking.services.servicesimpl.FlightServiceImpl;
 import com.zaxxer.hikari.util.FastList;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.time.LocalDate;
 
 @Controller
 public class MainController {
@@ -118,6 +121,24 @@ public class MainController {
         model.addAttribute("flights", flightService.getAllFlightsPaged(pageNo));
         model.addAttribute("currentPage", pageNo);
         return "flights";
+    }
+
+    @GetMapping("/flight/search")
+    public String showSearchFlightPage(Model model){
+
+        model.addAttribute("airports", airportService.getAllAirports());
+        return "searchFlight";
+    }
+
+    @PostMapping("/flight/search")
+    public String searchFlight (@RequestParam("departureTime") LocalDate departureTime,
+                                 Model model){
+        if(departureTime==null){
+            //ObjectError depError = new ObjectError("departureTime", "Should not be empty");
+            model.addAttribute("departureTimeError", "Should not be empty");
+            return "searchFlight";
+        }
+        return "index";
     }
 
 }
