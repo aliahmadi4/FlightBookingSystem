@@ -37,7 +37,7 @@
                 <td th:text="${airport.city}"></td>
                 <td th:text="${airport.state}"></td>
                 <td th:text="${airport.country}"></td>
-                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/airport/delete(airportId=${airport.airportId})}">Delete</a></td>
+                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/airport/delete(airportId=${airport.airportId})}" onclick="alert('are you sure you want to delete?')">Delete</a></td>
             </tr>
         </div>
         </tbody>

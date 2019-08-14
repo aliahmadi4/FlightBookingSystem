@@ -33,7 +33,7 @@
                 <td th:text="${aircraft.manufacturer}"></td>
                 <td th:text="${aircraft.model}"></td>
                 <td th:text="${aircraft.numberOfSeats}"></td>
-                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">Delete</a></td>
+                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}" onclick="alert('Are you sure you want to delete?')">Delete</a></td>
             </tr>
         </div>
         </tbody>

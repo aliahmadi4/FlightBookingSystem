@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -55,7 +56,16 @@ public class MainController {
             return "newAirport";
         }
         airportService.saveAirport(airport);
-        return "index";
+        model.addAttribute("airports", airportService.getAllAirportsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "airports";
+    }
+    @GetMapping("/airport/delete")
+    public String deleteAirport(@PathParam("airportId") int airportId, Model model){
+        airportService.deleteAirport(airportId);
+        model.addAttribute("airports", airportService.getAllAirportsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "airports";
     }
 
     @GetMapping("/airports")
@@ -79,7 +89,17 @@ public class MainController {
             return "newAircraft";
         }
         aircraftService.saveAircraft(aircraft);
-        return "index";
+        model.addAttribute("aircrafts", aircraftService.getAllAircraftsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "aircrafts";
+    }
+
+    @GetMapping("/aircraft/delete")
+    public String deleteAircraft(@PathParam("aircraftId") long aircraftId, Model model){
+        aircraftService.deleteAircraftById(aircraftId);
+        model.addAttribute("aircrafts", aircraftService.getAllAircraftsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "aircrafts";
     }
 
     @GetMapping("/aircrafts")
@@ -129,6 +149,14 @@ public class MainController {
         flight.setArrivalTime(arrivalTime);
         flightService.saveFlight(flight);
 
+        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "flights";
+    }
+
+    @GetMapping("/flight/delete")
+    public String deleteFlight(@PathParam("flightId") long flightId, Model model){
+        flightService.deleteFlightById(flightId);
         model.addAttribute("flights", flightService.getAllFlightsPaged(0));
         model.addAttribute("currentPage", 0);
         return "flights";
