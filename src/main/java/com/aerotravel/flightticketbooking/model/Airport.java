@@ -18,8 +18,6 @@ public class Airport {
     private String state;
     private String country;
 
-    @OneToMany(mappedBy = "airport")
-    List<Aircraft> aircrafts = new ArrayList<Aircraft>();
 
     @OneToMany(mappedBy = "departureAirport")
     List<Flight> flights = new ArrayList<Flight>();
@@ -27,9 +25,9 @@ public class Airport {
     public Airport() {
     }
 
-    public Airport(Integer airportId, String airportCode, String city, String state, String country) {
-        this.airportId = airportId;
+    public Airport(String airportCode, String airportName, String city, String state, String country) {
         this.airportCode = airportCode;
+        this.airportName = airportName;
         this.city = city;
         this.state = state;
         this.country = country;
@@ -79,13 +77,6 @@ public class Airport {
         this.airportId = airportId;
     }
 
-    public List<Aircraft> getAircrafts() {
-        return aircrafts;
-    }
-
-    public void setAircrafts(List<Aircraft> aircrafts) {
-        this.aircrafts = aircrafts;
-    }
 
     public List<Flight> getFlights() {
         return flights;
@@ -102,4 +93,5 @@ public class Airport {
     public void setAirportName(String airportName) {
         this.airportName = airportName;
     }
+
 }

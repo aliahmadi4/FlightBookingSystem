@@ -30,7 +30,7 @@
         </thead>
         <tbody>
         <div th:each="airport, iterStat:${airports}">
-            <tr class="table-primary">
+            <tr style="background-color: #fdfdfd">
                 <th scope="row" th:text="${airport.airportId}">Dark</th>
                 <td th:text="${airport.airportCode}"></td>
                 <td th:text="${airport.airportName}"></td>

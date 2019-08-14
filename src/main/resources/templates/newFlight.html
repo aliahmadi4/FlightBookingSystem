@@ -45,6 +45,8 @@
                 <label class="col-form-label" for="destinationAirport">Destination Airport</label>
                 <span th:if="${#fields.hasErrors('destinationAirport')}" th:errors="*{destinationAirport}"
                       class="badge badge-danger"></span>
+                <span th:if="${sameAirportError!=null}" th:text="${sameAirportError}"
+                      class="badge badge-danger"></span>
                 <select class="form-control" id="destinationAirport" name="destinationAirport">
                     <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
                             th:value="${airport.airportId}">
@@ -53,19 +55,33 @@
             </div>
 
             <div class="form-group col-md-6">
+                <label class="col-form-label" for="departureDate">Departure Date</label>
+                <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"
+                      class="badge badge-danger"></span>
+                <input type="date" class="form-control" id="departureDate"
+                       name="departureDate" th:value="${flight.departureDate}" required>
+            </div>
+            <div class="form-group col-md-6">
                 <label class="col-form-label" for="departureTime">Departure Time</label>
                 <span th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"
                       class="badge badge-danger"></span>
-                <input type="date" class="form-control" placeholder="" id="departureTime"
-                       name="departureTime" th:value="${flight.departureTime}" required>
+                <input type="time" class="form-control" id="departureTime"
+                       name="departureTime">
             </div>
 
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="arrivalDate">Arrival Date</label>
+                <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"
+                      class="badge badge-danger"></span>
+                <input type="date" class="form-control" id="arrivalDate"
+                       name="arrivalDate" th:value="${flight.arrivalDate}" required>
+            </div>
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="arrivalTime">Arrival Time</label>
                 <span th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"
                       class="badge badge-danger"></span>
-                <input type="date" class="form-control" placeholder="" id="arrivalTime"
-                       name="arrivalTime" th:value="${flight.arrivalTime}" required>
+                <input type="time" class="form-control" id="arrivalTime"
+                       name="arrivalTime">
             </div>
 
             <div class="form-group col-md-6">

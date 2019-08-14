@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/master-page}">
+
+<body>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px">
+                <h1 style="color: darkblue">Passenger Information</h1>
+            </div>
+
+        </div>
+    </div>
+
+    <form action="/flight/book/new" method="post" th:object="${passenger}">
+        <div class="row">
+            <input type="hidden" th:value="${flightId}" name="flightId">
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="firstName">First Name</label>
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                      class="badge badge-danger"></span>
+                <input type="text" class="form-control" placeholder="" id="firstName"
+                       name="firstName" th:value="${passenger.firstName}" required>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="lastName">Last Name</label>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                      class="badge badge-danger"></span>
+                <input type="text" class="form-control" placeholder="" id="lastName"
+                       name="lastName" th:value="${passenger.lastName}" required>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="phoneNumber">Phone Number</label>
+                <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                      class="badge badge-danger"></span>
+                <input type="text" class="form-control" placeholder="" id="phoneNumber"
+                       name="phoneNumber" th:value="${passenger.phoneNumber}" required>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="passportNumber">Passport Number</label>
+                <span th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}"
+                      class="badge badge-danger"></span>
+                <input type="text" class="form-control" placeholder="" id="passportNumber"
+                       name="passportNumber" th:value="${passenger.passportNumber}" required>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="email">Email Address</label>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                      class="badge badge-danger"></span>
+                <input type="email" class="form-control" placeholder="" id="email"
+                       name="email" th:value="${passenger.email}" required>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-form-label" for="address">Address</label>
+                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                      class="badge badge-danger"></span>
+                <input type="text" class="form-control" placeholder="" id="address"
+                       name="address" th:value="${passenger.address}" required>
+            </div>
+
+            <div class="form-group col-12">
+                <button type="submit" class="btn btn-success" style="float: right">Save</button>
+            </div>
+
+        </div>
+    </form>
+
+</th:block>
+</body>
+</html>

@@ -4,17 +4,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Passenger {
     @Id
     @GeneratedValue
     private long passengerId;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
     private String phoneNumber;
+    @NotBlank
     private String passportNumber;
+
     private String email;
+
     private String address;
 
     @ManyToOne
@@ -23,8 +30,7 @@ public class Passenger {
     public Passenger() {
     }
 
-    public Passenger(long passengerId, String firstName, String lastName, String phoneNumber, String passportNumber, String email, String address) {
-        this.passengerId = passengerId;
+    public Passenger( String firstName, String lastName, String phoneNumber, String passportNumber, String email, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

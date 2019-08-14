@@ -17,10 +17,17 @@ public class Flight {
     private Airport departureAirport;
     @ManyToOne
     private Airport destinationAirport;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate departureTime;
+    private LocalDate departureDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate arrivalTime;
+    private LocalDate arrivalDate;
+
+    private String departureTime;
+
+    private String arrivalTime;
+
     private double flightCharge;
 
     @ManyToOne
@@ -32,14 +39,17 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(long flightId, String flightNumber, Airport departureAirport, Airport destinationAirport, LocalDate departureTime, LocalDate arrivalTime, double flightCharge) {
-        this.flightId = flightId;
+
+
+    public Flight(String flightNumber, Airport departureAirport, Airport destinationAirport,
+                  double flightCharge, LocalDate departureDate, LocalDate arrivalDate) {
+
         this.flightNumber = flightNumber;
         this.departureAirport = departureAirport;
         this.destinationAirport = destinationAirport;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
         this.flightCharge = flightCharge;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
     }
 
     public long getFlightId() {
@@ -74,19 +84,35 @@ public class Flight {
         this.destinationAirport = destinationAirport;
     }
 
-    public LocalDate getDepartureTime() {
+    public LocalDate getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(LocalDate departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public LocalDate getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(LocalDate arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDate departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
-    public LocalDate getArrivalTime() {
+    public String getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDate arrivalTime) {
+    public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
@@ -113,5 +139,4 @@ public class Flight {
     public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
     }
-
 }

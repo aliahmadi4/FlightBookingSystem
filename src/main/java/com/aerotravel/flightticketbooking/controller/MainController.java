@@ -3,24 +3,22 @@ package com.aerotravel.flightticketbooking.controller;
 import com.aerotravel.flightticketbooking.model.Aircraft;
 import com.aerotravel.flightticketbooking.model.Airport;
 import com.aerotravel.flightticketbooking.model.Flight;
+import com.aerotravel.flightticketbooking.model.Passenger;
 import com.aerotravel.flightticketbooking.services.AircraftService;
 import com.aerotravel.flightticketbooking.services.AirportService;
 import com.aerotravel.flightticketbooking.services.FlightService;
-import com.aerotravel.flightticketbooking.services.servicesimpl.FlightServiceImpl;
-import com.zaxxer.hikari.util.FastList;
-import org.apache.tomcat.jni.Local;
+import com.aerotravel.flightticketbooking.services.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -33,6 +31,8 @@ public class MainController {
     AircraftService aircraftService;
     @Autowired
     FlightService flightService;
+    @Autowired
+    PassengerService passengerService;
 
 
     @GetMapping("/")
@@ -101,7 +101,10 @@ public class MainController {
                              @RequestParam("departureAirport") int departureAirport,
                              @RequestParam("destinationAirport") int destinationAirport,
                              @RequestParam("aircraft") long aircraftId,
+                             @RequestParam("arrivalTime") String arrivalTime,
+                             @RequestParam("departureTime") String departureTime,
                              Model model) {
+        System.out.println(arrivalTime);System.out.println(departureTime);
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("flight", new Flight());
@@ -109,12 +112,24 @@ public class MainController {
             model.addAttribute("airports", airportService.getAllAirports());
             return "newFlight";
         }
-        Flight flight1 = flight;
+        if (departureAirport == destinationAirport) {
+            model.addAttribute("sameAirportError", "Departure and destination airport can't be same");
+            model.addAttribute("flight", new Flight());
+            model.addAttribute("aircrafts", aircraftService.getAllAircrafts());
+            model.addAttribute("airports", airportService.getAllAirports());
+            return "newFlight";
+        }
+
         flight.setAircraft(aircraftService.getAircraftById(aircraftId));
         flight.setDepartureAirport(airportService.getAirportById(departureAirport));
         flight.setDestinationAirport(airportService.getAirportById(destinationAirport));
+        flight.setDepartureTime(departureTime);
+        flight.setArrivalTime(arrivalTime);
         flightService.saveFlight(flight);
-        return "index";
+
+        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "flights";
     }
 
     @GetMapping("/flights")
@@ -146,11 +161,52 @@ public class MainController {
             return "searchFlight";
         }
 
-
-        //model.addAttribute("flights", flightService.getAllFlights());
         model.addAttribute("flights", flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime));
         model.addAttribute("airports", airportService.getAllAirports());
         return "searchFlight";
+    }
+
+    @GetMapping("/flight/book")
+    public String showBookFlightPage(Model model) {
+        model.addAttribute("airports", airportService.getAllAirports());
+        return "bookFlight";
+    }
+
+    @PostMapping("/flight/book")
+    public String searchFlightToBook(@RequestParam("departureAirport") int departureAirport,
+                                     @RequestParam("destinationAirport") int destinationAirport,
+                                     @RequestParam("departureTime") String departureTime,
+                                     Model model) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate deptTime = LocalDate.parse(departureTime, dtf);
+        Airport depAirport = airportService.getAirportById(departureAirport);
+        Airport destAirport = airportService.getAirportById(destinationAirport);
+
+        if (departureAirport == destinationAirport) {
+            model.addAttribute("AirportError", "Departure and destination airport cant be same!");
+            model.addAttribute("airports", airportService.getAllAirports());
+            return "bookFlight";
+        }
+        model.addAttribute("flights", flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime));
+        model.addAttribute("airports", airportService.getAllAirports());
+        return "bookFlight";
+    }
+
+    @GetMapping("/flight/book/new")
+    public String showCustomerInfoPage(@RequestParam long flightId, Model model) {
+        model.addAttribute("flightId", flightId);
+        model.addAttribute("passenger", new Passenger());
+        return "newPassenger";
+    }
+
+    @PostMapping("/flight/book/new")
+    public String bookFlight(@Valid @ModelAttribute("passenger") Passenger passenger, BindingResult bindingResult, @RequestParam("flightId") long flightId, Model model) {
+        Flight flight = flightService.getFlightById(flightId);
+        Passenger passenger1 = passenger;
+        passenger1.setFlight(flight);
+        passengerService.savePassenger(passenger1);
+        model.addAttribute("passenger", passenger1);
+        return "confirmationPage";
     }
 
 }

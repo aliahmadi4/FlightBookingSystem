@@ -8,13 +8,13 @@
     <div class="row">
         <div class="row">
             <div class="col-md-12" style="margin-bottom: 10px">
-                <h1 style="color: darkblue">Search a Flight</h1>
+                <h1 style="color: darkblue">Book a Flight</h1>
             </div>
 
         </div>
     </div>
 
-    <form action="/flight/search" method="post">
+    <form action="/flight/book" method="post">
         <div class="row">
 
 
@@ -65,11 +65,12 @@
                         <th scope="col">Flight Number</th>
                         <th scope="col">From</th>
                         <th scope="col">To</th>
-                        <th scope="col">Departure time</th>
-                        <th scope="col">Arrival time</th>
+                        <th scope="col">Departure</th>
+                        <th scope="col">Arrival</th>
                         <th scope="col">Flight Charge</th>
                         <th scope="col">Aircraft</th>
                         <th scope="col">Available Seats</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,6 +85,9 @@
                             <td th:text="${flight.flightCharge}"></td>
                             <td th:text="${flight.aircraft.model}"></td>
                             <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
+                            <td><a type="button" class="btn btn-primary btn-sm"
+                                   th:if="${flight.passengers.size()<flight.aircraft.numberOfSeats}"
+                                   th:href="@{/flight/book/new(flightId=${flight.flightId})}" >Book</a></td>
                         </tr>
                     </div>
                     </tbody>

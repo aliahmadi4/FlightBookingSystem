@@ -13,8 +13,6 @@ public class Aircraft {
     private String model;
     private Integer numberOfSeats;
 
-    @ManyToOne
-    private Airport airport;
 
     @OneToMany(mappedBy = "aircraft")
     private List<Flight> flights = new ArrayList<>();
@@ -23,8 +21,8 @@ public class Aircraft {
     public Aircraft() {
     }
 
-    public Aircraft(long aircraftId, String manufacturer, String model, Integer numberOfSeats) {
-        this.aircraftId = aircraftId;
+    public Aircraft( String manufacturer, String model, Integer numberOfSeats) {
+
         this.manufacturer = manufacturer;
         this.model = model;
         this.numberOfSeats = numberOfSeats;
@@ -62,13 +60,7 @@ public class Aircraft {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public Airport getAirport() {
-        return airport;
-    }
 
-    public void setAirport(Airport airport) {
-        this.airport = airport;
-    }
 
     public List<Flight> getFlights() {
         return flights;

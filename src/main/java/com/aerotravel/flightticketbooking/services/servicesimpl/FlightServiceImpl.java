@@ -32,7 +32,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight getFlightById(Long flightId) {
+    public Flight getFlightById(long flightId) {
         return flightRepository.findById(flightId).orElse(null);
     }
 
@@ -42,12 +42,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void deleteFlightById(Long flightId) {
+    public void deleteFlightById(long flightId) {
         flightRepository.deleteById(flightId);
     }
 
     @Override
-    public List<Flight> getAllFlightsByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depTime) {
-        return flightRepository.findAllByDepartureAirportEqualsAndDestinationAirportEqualsAndDepartureTimeEquals(depAirport, destAirport, depTime);
+    public List<Flight> getAllFlightsByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depDate) {
+        return flightRepository.findAllByDepartureAirportEqualsAndDestinationAirportEqualsAndDepartureDateEquals(depAirport, destAirport, depDate);
     }
 }

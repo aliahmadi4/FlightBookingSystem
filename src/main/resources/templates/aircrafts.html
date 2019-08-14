@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <div th:each="aircraft, iterStat:${aircrafts}">
-            <tr class="table-primary">
+            <tr cstyle="background-color: #fdfdfd">
                 <th scope="row" th:text="${aircraft.aircraftId}">Dark</th>
                 <td th:text="${aircraft.manufacturer}"></td>
                 <td th:text="${aircraft.model}"></td>
