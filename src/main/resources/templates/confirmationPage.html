@@ -15,10 +15,12 @@
     </div>
     <h1>Aero Travel</h1>
     <hr>
-
-    <h3>Flight Id: <span th:text="${passenger.flight.flightId}"></span></h3>
-    <h3>Passenger Id: <span th:text="${passenger.passengerId}"></span></h3>
-    <br>
+    <div style="background-color: yellow; padding: 10px">
+        <h3>Flight Id: <span th:text="${passenger.flight.flightId}"></span></h3>
+        <h3>Passenger Id: <span th:text="${passenger.passengerId}"></span></h3>
+    </div>
+    <hr>
+    <h3>Customer Info</h3>
     <table class="table table-hover">
         <thead>
         <tr class="table-active">
@@ -42,7 +44,35 @@
         </div>
         </tbody>
     </table>
+    <hr>
+    <h3>Flight Info</h3>
+    <table class="table table-sm">
+        <thead>
+        <tr class="table-active">
+            <th scope="col">Flight Number</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Departure</th>
+            <th scope="col">Arrival</th>
+            <th scope="col">Flight Charge</th>
+            <th scope="col">Aircraft</th>
+        </tr>
+        </thead>
+        <tbody>
 
+        <tr style="background-color: #fdfdfd">
+
+            <td th:text="${passenger.flight.flightNumber}"></td>
+            <td th:text="${passenger.flight.departureAirport.airportName}"></td>
+            <td th:text="${passenger.flight.destinationAirport.airportName}"></td>
+            <td th:text="${passenger.flight.departureDate+' '+passenger.flight.departureTime}"></td>
+            <td th:text="${passenger.flight.arrivalDate+' '+passenger.flight.arrivalTime}"></td>
+            <td th:text="${passenger.flight.flightCharge}"></td>
+            <td th:text="${passenger.flight.aircraft.model}"></td>
+        </tr>
+
+        </tbody>
+    </table>
 
 </th:block>
 </body>
