@@ -47,6 +47,8 @@
         <th:block th:if="${passenger !=null}">
             <div class="col-12" style="margin-bottom: 10px">
                 <p style="color: green; font-weight: bold">Verified Successfully!</p>
+
+
             </div>
             <hr/>
             <h3>Customer Info</h3>
@@ -59,6 +61,7 @@
                     <th scope="col">Phone Number</th>
                     <th scope="col">Passport Number</th>
                     <th scope="col">Email</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -70,6 +73,7 @@
                         <td th:text="${passenger.phoneNumber}"></td>
                         <td th:text="${passenger.passportNumber}"></td>
                         <td th:text="${passenger.email}"></td>
+
                 </div>
                 </tbody>
             </table>
@@ -102,7 +106,10 @@
 
                 </tbody>
             </table>
-
+            <form method="post" action="/flight/book/cancel">
+                <input type="hidden" th:value="${passenger.passengerId}" name="passengerId">
+                <button type="submit" class="btn btn-sm btn-danger">Cancel This Ticket</button>
+            </form>
         </th:block>
 
     </div>

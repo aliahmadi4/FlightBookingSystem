@@ -45,9 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/flight/search","/flight/book/verify").permitAll()
+                .antMatchers("/", "/flight/search","/flight/book/verify", "/flight/book/cancel").permitAll()
                 .antMatchers("/flight/book/new", "/flight/book" ).hasRole("AGENT")
-                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers("/**", "/flight/book/new", "/flight/book").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()

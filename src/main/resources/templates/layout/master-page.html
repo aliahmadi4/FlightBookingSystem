@@ -34,7 +34,7 @@
                             <a class="nav-link" href="/flights">Flights</a>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasRole('ROLE_AGENT')">
+                    <th:block sec:authorize="hasAnyRole('ROLE_AGENT', 'ROLE_ADMIN')">
                         <li class="nav-item">
                             <a class="nav-link" href="/flight/book">Book Flight</a>
                         </li>

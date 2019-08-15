@@ -10,6 +10,7 @@ import com.aerotravel.flightticketbooking.services.FlightService;
 import com.aerotravel.flightticketbooking.services.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -283,6 +284,14 @@ public class MainController {
             return "verifyBooking";
         }
 
+    }
+
+    @PostMapping("/flight/book/cancel")
+    public String cancelTicket(@RequestParam("passengerId") long passengerId, Model model){
+        passengerService.deletePassengerById(passengerId);
+        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        model.addAttribute("currentPage", 0);
+        return "flights";
     }
 
     @GetMapping("/login")
