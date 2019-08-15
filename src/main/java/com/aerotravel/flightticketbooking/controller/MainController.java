@@ -294,6 +294,14 @@ public class MainController {
         return "flights";
     }
 
+    @GetMapping("passengers")
+    public String showPassengerList(@RequestParam long flightId, Model model){
+        List<Passenger> passengers = flightService.getFlightById(flightId).getPassengers();
+        model.addAttribute("passengers", passengers);
+        model.addAttribute("flight", flightService.getFlightById(flightId));
+        return "passengers";
+    }
+
     @GetMapping("/login")
     public String showLoginPage(){
         return "login";

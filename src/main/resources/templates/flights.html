@@ -29,6 +29,7 @@
             <th scope="col">Aircraft</th>
             <th scope="col">Available Seats</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
                 <td th:text="${flight.flightCharge}"></td>
                 <td th:text="${flight.aircraft.model}"></td>
                 <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
+                <td ><a th:href="@{/passengers(flightId=${flight.flightId})}">...</a></td>
                 <td ><a th:href="@{/flight/delete(flightId=${flight.flightId})}"><button type="button" class="btn btn-outline-danger btn-sm"  onclick="alert('Are you sure to cancel this flight?')">Cancel</button></a></td>
             </tr>
         </div>
