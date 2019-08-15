@@ -13,7 +13,7 @@
             <h1 style="color: darkblue">Aircrafts List </h1>
         </div>
         <div class="col-md-6">
-            <button type="button" class="btn btn-outline-primary" style="float: right"><a href="/aircraft/new">Add Aircraft</a></button>
+            <a href="/aircraft/new"><button type="button" class="btn btn-outline-primary" style="float: right">Add Aircraft</button></a>
         </div>
     </div>
     <table class="table table-hover">
@@ -33,7 +33,7 @@
                 <td th:text="${aircraft.manufacturer}"></td>
                 <td th:text="${aircraft.model}"></td>
                 <td th:text="${aircraft.numberOfSeats}"></td>
-                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}" onclick="alert('Are you sure you want to delete?')">Delete</a></td>
+                <td ><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}" ><button type="button" class="btn btn-outline-danger btn-sm"  onclick="alert('Are you sure you want to delete?')">Delete</button></a></td>
             </tr>
         </div>
         </tbody>

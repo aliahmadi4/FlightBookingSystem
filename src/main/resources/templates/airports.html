@@ -13,7 +13,7 @@
             <h1 style="color: darkblue">Airports List </h1>
         </div>
         <div class="col-md-6">
-            <button type="button" class="btn btn-outline-primary" style="float: right"><a href="/airport/new">Add Airport</a></button>
+            <a href="/airport/new"><button type="button" class="btn btn-outline-primary" style="float: right">Add Airport</button></a>
         </div>
     </div>
     <table class="table table-hover">
@@ -37,7 +37,7 @@
                 <td th:text="${airport.city}"></td>
                 <td th:text="${airport.state}"></td>
                 <td th:text="${airport.country}"></td>
-                <td ><a type="button" class="btn btn-primary btn-sm" th:href="@{/airport/delete(airportId=${airport.airportId})}" onclick="alert('are you sure you want to delete?')">Delete</a></td>
+                <td ><a th:href="@{/airport/delete(airportId=${airport.airportId})}"><button type="button" class="btn btn-outline-danger btn-sm" onclick="alert('are you sure you want to delete?')">Delete</button></a></td>
             </tr>
         </div>
         </tbody>

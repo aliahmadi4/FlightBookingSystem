@@ -172,6 +172,7 @@ public class MainController {
     @GetMapping("/flight/search")
     public String showSearchFlightPage(Model model) {
         model.addAttribute("airports", airportService.getAllAirports());
+        model.addAttribute("flights", null);
         return "searchFlight";
     }
 
@@ -190,8 +191,13 @@ public class MainController {
             model.addAttribute("airports", airportService.getAllAirports());
             return "searchFlight";
         }
+        List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
+        if(flights.isEmpty()){
+            model.addAttribute("notFound", "No Record Found!");
+        }else{
+            model.addAttribute("flights", flights);
+        }
 
-        model.addAttribute("flights", flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime));
         model.addAttribute("airports", airportService.getAllAirports());
         return "searchFlight";
     }
@@ -217,7 +223,12 @@ public class MainController {
             model.addAttribute("airports", airportService.getAllAirports());
             return "bookFlight";
         }
-        model.addAttribute("flights", flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime));
+        List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
+        if(flights.isEmpty()){
+            model.addAttribute("notFound", "No Record Found!");
+        }else{
+            model.addAttribute("flights", flights);
+        }
         model.addAttribute("airports", airportService.getAllAirports());
         return "bookFlight";
     }
@@ -272,5 +283,10 @@ public class MainController {
             return "verifyBooking";
         }
 
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage(){
+        return "login";
     }
 }

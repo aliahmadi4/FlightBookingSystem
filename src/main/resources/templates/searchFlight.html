@@ -52,7 +52,12 @@
         </div>
     </form>
     <div class="row">
-        <th:block th:if="${flights}">
+        <th:block th:if="${notFound !=null}">
+            <div class="col-12">
+                <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">No Record Found!</p>
+            </div>
+        </th:block>
+        <th:block th:if="${flights!=null}">
             <div class="row" style="margin-bottom: 10px">
                 <div class="col-md-6">
                     <h1 style="color: darkblue">Result </h1>
