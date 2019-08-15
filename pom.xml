@@ -12,6 +12,7 @@
     <artifactId>flightticketbooking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>flightticketbooking</name>
+    <packaging>jar</packaging>
     <description>Flight ticket booking project for Spring Boot</description>
 
     <properties>

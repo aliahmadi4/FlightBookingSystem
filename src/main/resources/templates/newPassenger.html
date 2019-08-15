@@ -55,7 +55,7 @@
                 <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                       class="badge badge-danger"></span>
                 <input type="email" class="form-control" placeholder="" id="email"
-                       name="email" th:value="${passenger.email}" required>
+                       name="email" th:value="${passenger.email}">
             </div>
 
             <div class="form-group col-md-4">

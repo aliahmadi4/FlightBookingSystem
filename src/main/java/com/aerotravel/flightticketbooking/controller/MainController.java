@@ -126,8 +126,7 @@ public class MainController {
                              @RequestParam("arrivalTime") String arrivalTime,
                              @RequestParam("departureTime") String departureTime,
                              Model model) {
-        System.out.println(arrivalTime);
-        System.out.println(departureTime);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("flight", new Flight());
@@ -260,8 +259,7 @@ public class MainController {
     public String showVerifyBookingPageResult(@RequestParam("flightId") long flightId,
                                               @RequestParam("passengerId") long passengerId,
                                               Model model) {
-        System.out.println(flightId);
-        System.out.println(passengerId);
+
         Flight flight = flightService.getFlightById(flightId);
         if (flight != null) {
             model.addAttribute("flight", flight);
@@ -305,5 +303,12 @@ public class MainController {
     @GetMapping("/login")
     public String showLoginPage(){
         return "login";
+    }
+
+
+
+    @GetMapping("fancy")
+    public String showLoginPage1(){
+        return "index";
     }
 }
