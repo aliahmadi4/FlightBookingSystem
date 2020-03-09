@@ -38,6 +38,7 @@ public class User {
     @Size(min=8)
     private String password;
 
+
     @ManyToMany(cascade=CascadeType.MERGE)
     @JoinTable(
             name="users_roles",
