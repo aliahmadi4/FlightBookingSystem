@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
 //    @Autowired
@@ -18,8 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
 //        return factory;
 //    }
 
-    @Bean
-    public SpringSecurityDialect securityDialect() {
-        return new SpringSecurityDialect();
-    }
+//    @Bean
+//    public SpringSecurityDialect securityDialect() {
+//        return new SpringSecurityDialect();
+//    }
 }

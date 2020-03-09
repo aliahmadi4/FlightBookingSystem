@@ -13,13 +13,13 @@ import java.util.List;
 
 @Service
 public class AircraftServiceImpl implements AircraftService {
-
+    @Autowired
     private AircraftRepository aircraftRepository;
 
-    @Autowired
-    public AircraftServiceImpl(AircraftRepository aircraftRepository){
-        this.aircraftRepository = aircraftRepository;
-    }
+//    @Autowired
+//    public AircraftServiceImpl(AircraftRepository aircraftRepository){
+//        this.aircraftRepository = aircraftRepository;
+//    }
 
     @Override
     public Page<Aircraft> getAllAircraftsPaged(int pageNum) {
