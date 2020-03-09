@@ -38,6 +38,7 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public Aircraft saveAircraft(Aircraft aircraft) {
+        if(aircraft==null) throw new IllegalArgumentException();
         return aircraftRepository.save(aircraft);
     }
 
