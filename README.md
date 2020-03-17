@@ -1,7 +1,7 @@
 # FlightBookingSystem
 Booking flight ticket system written by java spring boot framework
 
-1- Framework: Spring Boot
+1- Framework: Spring Boot 2
 2- Database: MySQL
 
 Hibernate, Thymeleaf, Spring Boot Security, Thymeleaf Dialect, JPA
