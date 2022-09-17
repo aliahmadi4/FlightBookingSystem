@@ -4,17 +4,13 @@ import com.aerotravel.flightticketbooking.model.Airport;
 import com.aerotravel.flightticketbooking.repository.AirportRepository;
 import com.aerotravel.flightticketbooking.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class AirportServiceImpl implements AirportService {
+public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> implements AirportService {
 
-    private AirportRepository airportRepository;
+    private final AirportRepository airportRepository;
 
     @Autowired
     public AirportServiceImpl(AirportRepository airportRepository){
@@ -22,27 +18,12 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public Page<Airport> getAllAirportsPaged(int pageNum) {
-        return airportRepository.findAll(PageRequest.of(pageNum,5, Sort.by("airportName")));
+    protected JpaRepository<Airport, Long> getRepository() {
+        return airportRepository;
     }
 
     @Override
-    public List<Airport> getAllAirports() {
-        return airportRepository.findAll();
-    }
-
-    @Override
-    public Airport getAirportById(Integer airportId) {
-        return airportRepository.findById(airportId).orElse(null);
-    }
-
-    @Override
-    public Airport saveAirport(Airport airport) {
-        return airportRepository.save(airport);
-    }
-
-    @Override
-    public void deleteAirport(Integer airportId) {
-        airportRepository.deleteById(airportId);
+    protected String[] getSortByProperties() {
+        return new String[] {"airportName"};
     }
 }

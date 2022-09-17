@@ -1,11 +1,20 @@
 package com.aerotravel.flightticketbooking.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Aircraft {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Aircraft implements IdedEntity{
     @Id
     @GeneratedValue
     private long aircraftId;
@@ -13,60 +22,23 @@ public class Aircraft {
     private String model;
     private Integer numberOfSeats;
 
-
     @OneToMany(mappedBy = "aircraft")
     private List<Flight> flights = new ArrayList<>();
 
-
-    public Aircraft() {
-    }
-
     public Aircraft( String manufacturer, String model, Integer numberOfSeats) {
-
+        this.manufacturer = manufacturer;
+        this.model = model;
+        this.numberOfSeats = numberOfSeats;
+    }
+    public Aircraft(long id, String manufacturer, String model, Integer numberOfSeats) {
+        this.aircraftId = id;
         this.manufacturer = manufacturer;
         this.model = model;
         this.numberOfSeats = numberOfSeats;
     }
 
-    public long getAircraftId() {
+    @Override
+    public long getId() {
         return aircraftId;
-    }
-
-    public void setAircraftId(long aircraftId) {
-        this.aircraftId = aircraftId;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Integer getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(Integer numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
-    }
-
-
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
     }
 }
