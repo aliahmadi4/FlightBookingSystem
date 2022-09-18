@@ -11,8 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -45,12 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/", "/flight/search","/flight/book/verify", "/flight/book/cancel", "/img/**").permitAll()
                 .antMatchers( "/flight/book**", "/flight/book/new").hasRole("AGENT")
                 .antMatchers("/**").hasRole("ADMIN")
-
-
-
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
