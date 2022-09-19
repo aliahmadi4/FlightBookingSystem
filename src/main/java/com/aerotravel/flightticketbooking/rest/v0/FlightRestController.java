@@ -1,7 +1,10 @@
 package com.aerotravel.flightticketbooking.rest.v0;
 
+import com.aerotravel.flightticketbooking.exception.EntityNotFoundException;
 import com.aerotravel.flightticketbooking.model.Flight;
+import com.aerotravel.flightticketbooking.model.Passenger;
 import com.aerotravel.flightticketbooking.model.dto.FlightDto;
+import com.aerotravel.flightticketbooking.model.dto.PassengerDto;
 import com.aerotravel.flightticketbooking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +70,8 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(params = {"departureAirportCode", "destinationAirportCode", "departureTime"})
+    @GetMapping(value = "/search",
+            params = {"departureAirportCode", "destinationAirportCode", "departureTime"})
     public List<FlightDto> findByAirportAndDepartureTime(
             @RequestParam("departureAirportCode") String departureAirportCode,
             @RequestParam("destinationAirportCode") String destinationAirportCode,
@@ -84,4 +88,39 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    @PostMapping("/book/{flightId}")
+    public PassengerDto bookFlight(@RequestBody Passenger passenger,
+                                   @PathVariable("flightId") long flightId) {
+        var flight = flightService.getById(flightId);
+        passenger.setFlight(flight);
+        var savedPassenger = passengerService.save(passenger);
+
+        return toPassengerDto(savedPassenger);
+    }
+
+    @GetMapping("/book/verify")
+    public PassengerDto verifyBooking(@RequestParam("passengerId") long passengerId,
+                                      @RequestParam("flightId") long flightId) {
+        var flight = flightService.getById(flightId);
+        var foundPassenger = flight.getPassengers()
+                .stream()
+                .filter(p -> p.getPassengerId() == passengerId)
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("No passenger %s assigned to the flight %s was found", passengerId, flightId)));
+
+        return toPassengerDto(foundPassenger);
+    }
+
+    @DeleteMapping("/book/cancel/{passengerId}")
+    public String cancelBooking(@PathVariable("passengerId") long passengerId) {
+        passengerService.deleteById(passengerId);
+        return "Something was canceled.";
+    }
+
+    private PassengerDto toPassengerDto(Passenger entity) {
+        return modelMapper.map(entity, PassengerDto.class);
+    }
+
 }

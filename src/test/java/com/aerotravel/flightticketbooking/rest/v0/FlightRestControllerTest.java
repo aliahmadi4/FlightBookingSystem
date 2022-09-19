@@ -159,10 +159,40 @@ class FlightRestControllerTest {
                 .andExpect(jsonPath("$[0].arrivalDate", notNullValue()));
     }
 
-    //TODO(L.E.) Implement the test.
-    @Disabled("Not yet implemented.")
+    //TODO(L.E.) Implement the tests.
+    @Disabled("Test - Not yet implemented.")
     @Test
-    void findByAirportAndDepartureTime() {
+    void findByAirportAndDepartureTime_success() {
+    }
+
+    @Disabled("Test - Not yet implemented.")
+    @Test
+    void verifyBooking_success() throws Exception {
+        var flight = buildRecord(170171, "VB-2310");
+        var passenger1 = Passenger.builder()
+                .flight(flight)
+                .passengerId(170174)
+                .build();
+        var passenger2 = Passenger.builder()
+                .flight(flight)
+                .passengerId(170178)
+                .build();
+        flight.setPassengers(List.of(passenger1, passenger2));
+        when(service.getById(flight.getFlightId())).thenReturn(flight);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get(API_MAPPING + "/book/verify")
+                        .param("passengerId", String.valueOf(passenger2.getPassengerId()))
+                        .param("flightId", String.valueOf(flight.getFlightId()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.passengerId", is(passenger2.getPassengerId()), Long.class));
+    }
+
+    @Disabled("Test - Not yet implemented.")
+    @Test
+    void cancelBooking_success() {
     }
 
     private Flight buildRecord(long id, String number) {
