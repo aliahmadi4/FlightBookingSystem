@@ -28,7 +28,16 @@ abstract class AbstractEntityServiceImpl<E> implements EntityService<E> {
 
     @Override
     public E getById(Long entityId) {
+        if (null == entityId) throw new IllegalArgumentException("Entity ID shall be null.");
+
         return getRepository().findById(entityId).orElseThrow(() -> buildEntityNotFoundException(entityId));
+    }
+
+    @Override
+    public List<E> getAllById(List<Long> entityIds) {
+        if (null == entityIds) throw new IllegalArgumentException("List of Entity IDs shall be null.");
+
+        return getRepository().findAllById(entityIds);
     }
 
     @Override

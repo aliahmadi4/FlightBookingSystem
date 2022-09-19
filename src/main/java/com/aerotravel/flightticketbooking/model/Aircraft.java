@@ -5,16 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Builder
+@Builder(builderMethodName = "internalBuilder")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aircraft implements IdedEntity{
+public class Aircraft {
     @Id
     @GeneratedValue
     private long aircraftId;
@@ -37,8 +42,19 @@ public class Aircraft implements IdedEntity{
         this.numberOfSeats = numberOfSeats;
     }
 
+    public static AircraftBuilder builder() {
+        return internalBuilder().flights(new ArrayList<>());
+    }
+
     @Override
-    public long getId() {
-        return aircraftId;
+    public String toString() {
+        return "Aircraft{" +
+                "aircraftId=" + aircraftId +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", flights=" + flights.stream()
+                .filter(Objects::nonNull).map(Flight::getFlightNumber).collect(Collectors.toList()) +
+                '}';
     }
 }

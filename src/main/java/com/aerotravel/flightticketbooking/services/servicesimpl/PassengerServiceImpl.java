@@ -35,6 +35,11 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
+    public List<Passenger> getAllById(List<Long> passengerIds) {
+        return passengerRepository.findAllById(passengerIds);
+    }
+
+    @Override
     public Passenger savePassenger(Passenger passenger) {
         return passengerRepository.save(passenger);
     }

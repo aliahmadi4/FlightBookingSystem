@@ -5,49 +5,39 @@ import com.aerotravel.flightticketbooking.model.Flight;
 import com.aerotravel.flightticketbooking.repository.FlightRepository;
 import com.aerotravel.flightticketbooking.services.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-@Service
-public class FlightServiceImpl implements FlightService {
 
-    private FlightRepository flightRepository;
+@Service
+public class FlightServiceImpl extends AbstractEntityServiceImpl<Flight> implements FlightService {
+
+    private final FlightRepository flightRepository;
 
     @Autowired
-    public FlightServiceImpl(FlightRepository flightRepository){
+    public FlightServiceImpl(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
     }
+
     @Override
-    public Page<Flight> getAllFlightsPaged(int pageNum) {
-        return flightRepository.findAll(PageRequest.of(pageNum,5, Sort.by("departureAirport")));
+    protected JpaRepository<Flight, Long> getRepository() {
+        return flightRepository;
     }
 
     @Override
-    public List<Flight> getAllFlights() {
-        return flightRepository.findAll();
+    protected String[] getSortByProperties() {
+        return new String[]{"departureAirport"};
     }
 
     @Override
-    public Flight getFlightById(long flightId) {
-        return flightRepository.findById(flightId).orElse(null);
-    }
-
-    @Override
-    public Flight saveFlight(Flight flight) {
-        return flightRepository.save(flight);
-    }
-
-    @Override
-    public void deleteFlightById(long flightId) {
-        flightRepository.deleteById(flightId);
-    }
-
-    @Override
-    public List<Flight> getAllFlightsByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depDate) {
+    public List<Flight> getAllByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depDate) {
         return flightRepository.findAllByDepartureAirportEqualsAndDestinationAirportEqualsAndDepartureDateEquals(depAirport, destAirport, depDate);
+    }
+
+    @Override
+    public List<Flight> getAllByByFlightNumber(String flightNumber) {
+        return flightRepository.findByFlightNumber(flightNumber);
     }
 }
