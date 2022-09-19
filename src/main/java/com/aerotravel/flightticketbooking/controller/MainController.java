@@ -145,24 +145,24 @@ public class MainController {
         flight.setDestinationAirport(airportService.getById(destinationAirport));
         flight.setDepartureTime(departureTime);
         flight.setArrivalTime(arrivalTime);
-        flightService.saveFlight(flight);
+        flightService.save(flight);
 
-        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        model.addAttribute("flights", flightService.getAllPaged(0));
         model.addAttribute("currentPage", 0);
         return "flights";
     }
 
     @GetMapping("/flight/delete")
     public String deleteFlight(@PathParam("flightId") long flightId, Model model){
-        flightService.deleteFlightById(flightId);
-        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        flightService.deleteById(flightId);
+        model.addAttribute("flights", flightService.getAllPaged(0));
         model.addAttribute("currentPage", 0);
         return "flights";
     }
 
     @GetMapping("/flights")
     public String showFlightsList(@RequestParam(defaultValue = "0") int pageNo, Model model) {
-        model.addAttribute("flights", flightService.getAllFlightsPaged(pageNo));
+        model.addAttribute("flights", flightService.getAllPaged(pageNo));
         model.addAttribute("currentPage", pageNo);
         return "flights";
     }
@@ -189,7 +189,7 @@ public class MainController {
             model.addAttribute("airports", airportService.getAll());
             return "searchFlight";
         }
-        List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
+        List<Flight> flights = flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptTime);
         if(flights.isEmpty()){
             model.addAttribute("notFound", "No Record Found!");
         }else{
@@ -221,7 +221,7 @@ public class MainController {
             model.addAttribute("airports", airportService.getAll());
             return "bookFlight";
         }
-        List<Flight> flights = flightService.getAllFlightsByAirportAndDepartureTime(depAirport, destAirport, deptTime);
+        List<Flight> flights = flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptTime);
         if(flights.isEmpty()){
             model.addAttribute("notFound", "No Record Found!");
         }else{
@@ -240,7 +240,7 @@ public class MainController {
 
     @PostMapping("/flight/book/new")
     public String bookFlight(@Valid @ModelAttribute("passenger") Passenger passenger, BindingResult bindingResult, @RequestParam("flightId") long flightId, Model model) {
-        Flight flight = flightService.getFlightById(flightId);
+        Flight flight = flightService.getById(flightId);
         Passenger passenger1 = passenger;
         passenger1.setFlight(flight);
         passengerService.savePassenger(passenger1);
@@ -258,7 +258,7 @@ public class MainController {
                                               @RequestParam("passengerId") long passengerId,
                                               Model model) {
 
-        Flight flight = flightService.getFlightById(flightId);
+        Flight flight = flightService.getById(flightId);
         if (flight != null) {
             model.addAttribute("flight", flight);
             List<Passenger> passengers = flight.getPassengers();
@@ -285,16 +285,16 @@ public class MainController {
     @PostMapping("/flight/book/cancel")
     public String cancelTicket(@RequestParam("passengerId") long passengerId, Model model){
         passengerService.deletePassengerById(passengerId);
-        model.addAttribute("flights", flightService.getAllFlightsPaged(0));
+        model.addAttribute("flights", flightService.getAllPaged(0));
         model.addAttribute("currentPage", 0);
         return "flights";
     }
 
     @GetMapping("passengers")
     public String showPassengerList(@RequestParam long flightId, Model model){
-        List<Passenger> passengers = flightService.getFlightById(flightId).getPassengers();
+        List<Passenger> passengers = flightService.getById(flightId).getPassengers();
         model.addAttribute("passengers", passengers);
-        model.addAttribute("flight", flightService.getFlightById(flightId));
+        model.addAttribute("flight", flightService.getById(flightId));
         return "passengers";
     }
 

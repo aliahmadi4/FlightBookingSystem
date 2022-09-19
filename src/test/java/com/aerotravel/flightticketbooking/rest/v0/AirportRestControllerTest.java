@@ -51,10 +51,10 @@ class AirportRestControllerTest {
 
     @Test
     public void findById_success() throws Exception {
-        when(service.getById(airport.getId())).thenReturn(airport);
+        when(service.getById(airport.getAirportId())).thenReturn(airport);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get(API_MAPPING + "/" + airport.getId())
+                        .get(API_MAPPING + "/" + airport.getAirportId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
@@ -81,10 +81,10 @@ class AirportRestControllerTest {
     @Test
     public void update_success() throws Exception {
         var data = buildAirport(9596, "UUSS");
-        when(service.getById(data.getId())).thenReturn(data);
+        when(service.getById(data.getAirportId())).thenReturn(data);
         when(service.save(data)).thenReturn(data);
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
-                .put(API_MAPPING + "/" + data.getId())
+                .put(API_MAPPING + "/" + data.getAirportId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(data));
@@ -97,10 +97,10 @@ class AirportRestControllerTest {
 
     @Test
     public void delete_success() throws Exception {
-        when(service.getById(airport.getId())).thenReturn(airport);
+        when(service.getById(airport.getAirportId())).thenReturn(airport);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete(API_MAPPING + "/" + airport.getId())
+                        .delete(API_MAPPING + "/" + airport.getAirportId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

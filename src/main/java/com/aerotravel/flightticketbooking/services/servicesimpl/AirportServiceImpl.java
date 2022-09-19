@@ -1,5 +1,6 @@
 package com.aerotravel.flightticketbooking.services.servicesimpl;
 
+import com.aerotravel.flightticketbooking.exception.EntityNotFoundException;
 import com.aerotravel.flightticketbooking.model.Airport;
 import com.aerotravel.flightticketbooking.repository.AirportRepository;
 import com.aerotravel.flightticketbooking.services.AirportService;
@@ -13,7 +14,7 @@ public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> imple
     private final AirportRepository airportRepository;
 
     @Autowired
-    public AirportServiceImpl(AirportRepository airportRepository){
+    public AirportServiceImpl(AirportRepository airportRepository) {
         this.airportRepository = airportRepository;
     }
 
@@ -24,6 +25,14 @@ public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> imple
 
     @Override
     protected String[] getSortByProperties() {
-        return new String[] {"airportName"};
+        return new String[]{"airportName"};
+    }
+
+    @Override
+    public Airport getByCode(String airportCode) {
+        if (null == airportCode) throw new IllegalArgumentException("Airport code shall not be null.");
+
+        return airportRepository.findByAirportCode(airportCode)
+                .orElseThrow(() -> new EntityNotFoundException("Could not find airport by code=" + airportCode));
     }
 }

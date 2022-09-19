@@ -5,22 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Builder
+@Builder(builderMethodName = "internalBuilder")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Airport implements IdedEntity{
+public class Airport {
     @Id
     @GeneratedValue
     private long airportId;
+    @Column(unique=true)
     private String airportCode;
     private String airportName;
     private String city;
@@ -39,8 +39,21 @@ public class Airport implements IdedEntity{
         this.country = country;
     }
 
+    public static AirportBuilder builder() {
+        return internalBuilder().flights(new ArrayList<>());
+    }
+
     @Override
-    public long getId() {
-        return airportId;
+    public String toString() {
+        return "Airport{" +
+                "airportId=" + airportId +
+                ", airportCode='" + airportCode + '\'' +
+                ", airportName='" + airportName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", flights=" + flights.stream()
+                .filter(Objects::nonNull).map(Flight::getFlightNumber).collect(Collectors.toList()) +
+                '}';
     }
 }

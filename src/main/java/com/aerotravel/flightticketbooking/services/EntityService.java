@@ -12,6 +12,8 @@ public interface EntityService<E> {
 
     E getById(Long id);
 
+    List<E> getAllById(List<Long> ids);
+
     E save(E entity);
 
     void deleteById(Long id);
