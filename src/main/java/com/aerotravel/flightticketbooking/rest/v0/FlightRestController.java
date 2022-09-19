@@ -6,6 +6,7 @@ import com.aerotravel.flightticketbooking.model.Passenger;
 import com.aerotravel.flightticketbooking.model.dto.FlightDto;
 import com.aerotravel.flightticketbooking.model.dto.PassengerDto;
 import com.aerotravel.flightticketbooking.services.*;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +64,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     }
 
     @GetMapping("/number/{flightNumber}")
+    @Operation(summary = "Attempt to get a flight by its number.")
     public List<FlightDto> findByFlightNumber(@PathVariable String flightNumber) {
         return flightService.getAllByByFlightNumber(flightNumber)
                 .stream()
@@ -72,6 +74,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
 
     @GetMapping(value = "/search",
             params = {"departureAirportCode", "destinationAirportCode", "departureTime"})
+    @Operation(summary = "Search for flights by departure/destination airport codes and departure date (shall be in yyyy-MM-dd format).")
     public List<FlightDto> findByAirportAndDepartureTime(
             @RequestParam("departureAirportCode") String departureAirportCode,
             @RequestParam("destinationAirportCode") String destinationAirportCode,
@@ -90,6 +93,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     }
 
     @PostMapping("/book/{flightId}")
+    @Operation(summary = "Attempt to book a ticket for the flight.")
     public PassengerDto bookFlight(@RequestBody Passenger passenger,
                                    @PathVariable("flightId") long flightId) {
         var flight = flightService.getById(flightId);
@@ -100,6 +104,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     }
 
     @GetMapping("/book/verify")
+    @Operation(summary = "Attempt to verify booking by flightId and passengerId.")
     public PassengerDto verifyBooking(@RequestParam("passengerId") long passengerId,
                                       @RequestParam("flightId") long flightId) {
         var flight = flightService.getById(flightId);
@@ -114,6 +119,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     }
 
     @DeleteMapping("/book/cancel/{passengerId}")
+    @Operation(summary = "Attempt to cancel a booking.")
     public String cancelBooking(@PathVariable("passengerId") long passengerId) {
         passengerService.deleteById(passengerId);
         return "Something was canceled.";
