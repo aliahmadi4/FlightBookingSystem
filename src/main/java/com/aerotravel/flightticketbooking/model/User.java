@@ -1,17 +1,28 @@
 package com.aerotravel.flightticketbooking.model;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users")
+@Data
+@Builder(builderMethodName = "internalBuilder")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Column(nullable=false)
     @NotBlank(message = "* First Name is required")
@@ -38,7 +49,6 @@ public class User {
     @Size(min=8)
     private String password;
 
-
     @ManyToMany(cascade=CascadeType.MERGE)
     @JoinTable(
             name="users_roles",
@@ -46,68 +56,21 @@ public class User {
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
     private List<Role> roles;
 
-    public Integer getId()
-    {
-        return id;
+    public static UserBuilder builder() {
+        return internalBuilder().roles(new ArrayList<>());
     }
-    public void setId(Integer id)
-    {
-        this.id = id;
-    }
-    public String getFirstname()
-    {
-        return firstname;
-    }
-    public void setFirstname(String firstname)
-    {
-        this.firstname = firstname;
-    }
-    public String getMiddlename()
-    {
-        return firstname;
-    }
-    public void setMiddlename(String middlename)
-    {
-        this.middlename = middlename;
-    }
-    public String getLastnamename()
-    {
-        return lastname;
-    }
-    public void setLastname(String lastname)
-    {
-        this.lastname = lastname;
-    }
-    public String getUsername()
-    {
-        return username;
-    }
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-    public String getEmail()
-    {
-        return email;
-    }
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-    public String getPassword()
-    {
-        return password;
-    }
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-    public List<Role> getRoles()
-    {
-        return roles;
-    }
-    public void setRoles(List<Role> roles)
-    {
-        this.roles = roles;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", middlename='" + middlename + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles.stream().map(Role::getName).collect(Collectors.toList()) +
+                '}';
     }
 }
