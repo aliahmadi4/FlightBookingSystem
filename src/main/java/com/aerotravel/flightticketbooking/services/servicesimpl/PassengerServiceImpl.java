@@ -4,48 +4,26 @@ import com.aerotravel.flightticketbooking.model.Passenger;
 import com.aerotravel.flightticketbooking.repository.PassengerRepository;
 import com.aerotravel.flightticketbooking.services.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-public class PassengerServiceImpl implements PassengerService {
+public class PassengerServiceImpl extends AbstractEntityServiceImpl<Passenger> implements PassengerService {
 
-    private PassengerRepository passengerRepository;
+    private final PassengerRepository passengerRepository;
 
     @Autowired
-    public PassengerServiceImpl(PassengerRepository passengerRepository){
+    public PassengerServiceImpl(PassengerRepository passengerRepository) {
         this.passengerRepository = passengerRepository;
     }
+
     @Override
-    public Page<Passenger> getAllPassengersPaged(int pageNum) {
-        return passengerRepository.findAll(PageRequest.of(pageNum,5, Sort.by("lastName")));
+    protected JpaRepository<Passenger, Long> getRepository() {
+        return passengerRepository;
     }
 
     @Override
-    public List<Passenger> getAllPassengers() {
-        return passengerRepository.findAll();
-    }
-
-    @Override
-    public Passenger getPassengerById(Long passengerId) {
-        return passengerRepository.findById(passengerId).orElse(null);
-    }
-
-    @Override
-    public List<Passenger> getAllById(List<Long> passengerIds) {
-        return passengerRepository.findAllById(passengerIds);
-    }
-
-    @Override
-    public Passenger savePassenger(Passenger passenger) {
-        return passengerRepository.save(passenger);
-    }
-
-    @Override
-    public void deletePassengerById(Long passengerId) {
-        passengerRepository.deleteById(passengerId);
+    protected String[] getSortByProperties() {
+        return new String[]{"lastName"};
     }
 }

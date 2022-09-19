@@ -243,7 +243,7 @@ public class MainController {
         Flight flight = flightService.getById(flightId);
         Passenger passenger1 = passenger;
         passenger1.setFlight(flight);
-        passengerService.savePassenger(passenger1);
+        passengerService.save(passenger1);
         model.addAttribute("passenger", passenger1);
         return "confirmationPage";
     }
@@ -265,7 +265,7 @@ public class MainController {
             Passenger passenger = null;
             for (Passenger p : passengers) {
                 if (p.getPassengerId() == passengerId) {
-                    passenger = passengerService.getPassengerById(passengerId);
+                    passenger = passengerService.getById(passengerId);
                     model.addAttribute("passenger", passenger);
                 }
             }
@@ -284,7 +284,7 @@ public class MainController {
 
     @PostMapping("/flight/book/cancel")
     public String cancelTicket(@RequestParam("passengerId") long passengerId, Model model){
-        passengerService.deletePassengerById(passengerId);
+        passengerService.deleteById(passengerId);
         model.addAttribute("flights", flightService.getAllPaged(0));
         model.addAttribute("currentPage", 0);
         return "flights";
