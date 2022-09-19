@@ -4,6 +4,7 @@ import com.aerotravel.flightticketbooking.model.User;
 import com.aerotravel.flightticketbooking.model.dto.UserDto;
 import com.aerotravel.flightticketbooking.services.EntityService;
 import com.aerotravel.flightticketbooking.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class UserRestController extends AbstractRestController<User, UserDto> {
     }
 
     @GetMapping("/load/{username}")
+    @Operation(summary = "Attempt to get a user by username.")
     public UserDetails findByUsername(@PathVariable String username) {
         return userService.loadUserByUsername(username);
     }
