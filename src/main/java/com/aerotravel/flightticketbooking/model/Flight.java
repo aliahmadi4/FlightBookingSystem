@@ -62,8 +62,8 @@ public class Flight {
         return "Flight{" +
                 "flightId=" + flightId +
                 ", flightNumber='" + flightNumber + '\'' +
-                ", departureAirport=" + departureAirport +
-                ", destinationAirport=" + destinationAirport +
+                ", departureAirport=" + (departureAirport == null ? null : departureAirport.getAirportCode()) +
+                ", destinationAirport=" + (destinationAirport == null ? null : destinationAirport.getAirportCode()) +
                 ", departureDate=" + departureDate +
                 ", arrivalDate=" + arrivalDate +
                 ", departureTime='" + departureTime + '\'' +
@@ -71,6 +71,21 @@ public class Flight {
                 ", flightCharge=" + flightCharge +
                 ", aircraft=" + (aircraft == null ? null : aircraft.getModel()) +
                 ", passengers=" + passengers.stream().map(Passenger::getLastName).collect(Collectors.toList()) +
+                '}';
+    }
+
+    public String toShortString() {
+        return "Flight{" +
+                "flightId=" + flightId +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", departureAirport=" + (departureAirport == null ? null : departureAirport.getAirportCode()) +
+                ", destinationAirport=" + (destinationAirport == null ? null : destinationAirport.getAirportCode()) +
+                ", departureDate=" + departureDate +
+                ", arrivalDate=" + arrivalDate +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
+                ", flightCharge=" + flightCharge +
+                ", aircraft=" + (aircraft == null ? null : aircraft.getModel()) +
                 '}';
     }
 }

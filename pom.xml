@@ -18,6 +18,7 @@
     <properties>
         <java.version>11</java.version>
         <servlet.version>4.0.0</servlet.version>
+        <faker.version>1.0.2</faker.version>
     </properties>
 
     <dependencies>
@@ -84,6 +85,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${faker.version}</version>
         </dependency>
 
         <dependency>
