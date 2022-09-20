@@ -33,7 +33,7 @@ public class UserRestController extends AbstractRestController<User, UserDto> {
 
     @Override
     protected User convertToEntity(UserDto entityDto) {
-        // TODO(L.E.) Fix Roles issue one day.
+        //TODO(L.E.) Fix Roles issue one day.
         return modelMapper.map(entityDto, User.class);
     }
 
