@@ -27,7 +27,6 @@ public class Airport {
     private String state;
     private String country;
 
-
     @OneToMany(mappedBy = "departureAirport")
     @Builder.Default
     List<Flight> flights = new ArrayList<>();
@@ -51,6 +50,17 @@ public class Airport {
                 ", country='" + country + '\'' +
                 ", flights=" + flights.stream()
                 .filter(Objects::nonNull).map(Flight::getFlightNumber).collect(Collectors.toList()) +
+                '}';
+    }
+
+    public String toShortString() {
+        return "Airport{" +
+                "airportId=" + airportId +
+                ", airportCode='" + airportCode + '\'' +
+                ", airportName='" + airportName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 }

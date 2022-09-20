@@ -26,16 +26,16 @@ public class Aircraft {
     private String manufacturer;
     private String model;
     private Integer numberOfSeats;
-
     @OneToMany(mappedBy = "aircraft")
     @Builder.Default
     private List<Flight> flights = new ArrayList<>();
 
-    public Aircraft( String manufacturer, String model, Integer numberOfSeats) {
+    public Aircraft(String manufacturer, String model, Integer numberOfSeats) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.numberOfSeats = numberOfSeats;
     }
+
     public Aircraft(long id, String manufacturer, String model, Integer numberOfSeats) {
         this.aircraftId = id;
         this.manufacturer = manufacturer;
@@ -52,6 +52,14 @@ public class Aircraft {
                 ", numberOfSeats=" + numberOfSeats +
                 ", flights=" + flights.stream()
                 .filter(Objects::nonNull).map(Flight::getFlightNumber).collect(Collectors.toList()) +
+                '}';
+    }
+    public String toShortString() {
+        return "Aircraft{" +
+                "aircraftId=" + aircraftId +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
                 '}';
     }
 }
