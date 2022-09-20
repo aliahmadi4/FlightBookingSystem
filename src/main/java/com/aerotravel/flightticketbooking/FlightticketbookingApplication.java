@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @OpenAPIDefinition(info = @Info(title = "Flight ticket booking API", version = "00.00",
         contact = @Contact(name = "FTB API Support",
                 url = "http://ya.ru",
-                email = "4ern@dyr.a")))
+                email = "4ernaja@dyr.a")))
 public class FlightticketbookingApplication {
 
     public static void main(String[] args) {

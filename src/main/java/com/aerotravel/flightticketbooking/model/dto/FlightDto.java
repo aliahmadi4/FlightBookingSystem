@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder(builderMethodName = "internalBuilder")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlightDto implements IdedEntity {
@@ -24,14 +24,11 @@ public class FlightDto implements IdedEntity {
     private String arrivalTime;
     private double flightCharge;
     private long aircraftId;
+    @Builder.Default
     private List<Long> passengerIds = new ArrayList<>();
 
     @Override
     public long getId() {
         return flightId;
-    }
-
-    public static FlightDtoBuilder builder() {
-        return internalBuilder().passengerIds(new ArrayList<>());
     }
 }

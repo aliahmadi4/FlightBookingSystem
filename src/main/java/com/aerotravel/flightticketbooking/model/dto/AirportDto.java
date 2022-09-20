@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,6 +19,8 @@ public class AirportDto implements IdedEntity {
     private String city;
     private String state;
     private String country;
+    @Builder.Default
+    private List<Long> flightIds = new ArrayList<>();
 
     @Override
     public long getId() {

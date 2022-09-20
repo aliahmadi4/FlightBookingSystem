@@ -41,8 +41,6 @@ e.g.
 
 -----------
 # TODO:
-- Add logging.
-- Add Swagger.
 - UI: fix/make prettier.
 - Cleanup documentation.
 - Add data generator.

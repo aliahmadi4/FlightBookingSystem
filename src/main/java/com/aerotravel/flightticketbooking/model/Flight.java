@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Builder(builderMethodName = "internalBuilder")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Flight {
@@ -43,6 +43,7 @@ public class Flight {
     Aircraft aircraft;
 
     @OneToMany(mappedBy = "flight")
+    @Builder.Default
     List<Passenger> passengers = new ArrayList<>();
 
     public Flight(String flightNumber, Airport departureAirport, Airport destinationAirport,
@@ -54,10 +55,6 @@ public class Flight {
         this.flightCharge = flightCharge;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
-    }
-
-    public static FlightBuilder builder() {
-        return internalBuilder().passengers(new ArrayList<>());
     }
 
     @Override

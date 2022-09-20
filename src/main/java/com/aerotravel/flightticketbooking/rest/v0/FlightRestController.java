@@ -7,6 +7,7 @@ import com.aerotravel.flightticketbooking.model.dto.FlightDto;
 import com.aerotravel.flightticketbooking.model.dto.PassengerDto;
 import com.aerotravel.flightticketbooking.services.*;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v0/flights")
+@Slf4j
 public class FlightRestController extends AbstractRestController<Flight, FlightDto> {
 
     private final FlightService flightService;
@@ -66,6 +68,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     @GetMapping("/number/{flightNumber}")
     @Operation(summary = "Attempt to get a flight by its number.")
     public List<FlightDto> findByFlightNumber(@PathVariable String flightNumber) {
+        log.info("Searching for flights by number={}", flightNumber);
         return flightService.getAllByByFlightNumber(flightNumber)
                 .stream()
                 .map(this::convertToDto)
@@ -73,20 +76,20 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     }
 
     @GetMapping(value = "/search",
-            params = {"departureAirportCode", "destinationAirportCode", "departureTime"})
-    @Operation(summary = "Search for flights by departure/destination airport codes and departure date (shall be in yyyy-MM-dd format).")
+            params = {"departureAirportCode", "destinationAirportCode", "departureDate"})
+    @Operation(summary = "Search for flights by departure/destination airport codes and departure date.")
     public List<FlightDto> findByAirportAndDepartureTime(
             @RequestParam("departureAirportCode") String departureAirportCode,
             @RequestParam("destinationAirportCode") String destinationAirportCode,
-            @RequestParam("departureTime") String departureTime) {
-
+            @RequestParam("departureDate(yyyy-MM-dd)") String departureDate) {
+        log.info("Searching for flights from {} to {} on {}.", departureDate, destinationAirportCode, departureDate);
         var depAirport = airportService.getByCode(departureAirportCode);
         var destAirport = airportService.getByCode(destinationAirportCode);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate deptTime = LocalDate.parse(departureTime, dtf);
+        LocalDate deptDate = LocalDate.parse(departureDate, dtf);
 
-        return flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptTime)
+        return flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptDate)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -96,6 +99,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     @Operation(summary = "Attempt to book a ticket for the flight.")
     public PassengerDto bookFlight(@RequestBody Passenger passenger,
                                    @PathVariable("flightId") long flightId) {
+        log.info("Booking for the flight {}.", flightId);
         var flight = flightService.getById(flightId);
         passenger.setFlight(flight);
         var savedPassenger = passengerService.save(passenger);
@@ -107,6 +111,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     @Operation(summary = "Attempt to verify booking by flightId and passengerId.")
     public PassengerDto verifyBooking(@RequestParam("passengerId") long passengerId,
                                       @RequestParam("flightId") long flightId) {
+        log.info("Verifying booking for passenger {} and flight {}.", passengerId, flightId);
         var flight = flightService.getById(flightId);
         var foundPassenger = flight.getPassengers()
                 .stream()
@@ -121,6 +126,7 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     @DeleteMapping("/book/cancel/{passengerId}")
     @Operation(summary = "Attempt to cancel a booking.")
     public String cancelBooking(@PathVariable("passengerId") long passengerId) {
+        log.info("Canceling booking for {}", passengerId);
         passengerService.deleteById(passengerId);
         return "Something was canceled.";
     }

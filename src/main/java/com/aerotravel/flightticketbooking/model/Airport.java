@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Builder(builderMethodName = "internalBuilder")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Airport {
@@ -29,6 +29,7 @@ public class Airport {
 
 
     @OneToMany(mappedBy = "departureAirport")
+    @Builder.Default
     List<Flight> flights = new ArrayList<>();
 
     public Airport(String airportCode, String airportName, String city, String state, String country) {
@@ -37,10 +38,6 @@ public class Airport {
         this.city = city;
         this.state = state;
         this.country = country;
-    }
-
-    public static AirportBuilder builder() {
-        return internalBuilder().flights(new ArrayList<>());
     }
 
     @Override

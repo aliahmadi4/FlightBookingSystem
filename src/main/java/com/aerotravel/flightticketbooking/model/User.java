@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="users")
 @Data
-@Builder(builderMethodName = "internalBuilder")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
@@ -54,11 +54,8 @@ public class User {
             name="users_roles",
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
-    private List<Role> roles;
-
-    public static UserBuilder builder() {
-        return internalBuilder().roles(new ArrayList<>());
-    }
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
 
     @Override
     public String toString() {

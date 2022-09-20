@@ -1,7 +1,6 @@
 package com.aerotravel.flightticketbooking.rest.v0;
 
 import com.aerotravel.flightticketbooking.model.Aircraft;
-import com.aerotravel.flightticketbooking.model.Flight;
 import com.aerotravel.flightticketbooking.model.dto.AircraftDto;
 import com.aerotravel.flightticketbooking.services.AircraftService;
 import com.aerotravel.flightticketbooking.services.EntityService;
@@ -10,19 +9,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.modelmapper.PropertyMap;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v0/aircrafts")
+@Slf4j
 public class AircraftRestController extends AbstractRestController<Aircraft, AircraftDto> {
     private final AircraftService aircraftService;
     private final FlightService flightService;
@@ -57,6 +56,7 @@ public class AircraftRestController extends AbstractRestController<Aircraft, Air
             content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = AircraftDto.class)) })
     public List<AircraftDto> findByModel(@PathVariable String modelName) {
+        log.info("Searching for aircrafts by model={}", modelName);
         return aircraftService.getByModel(modelName)
                 .stream()
                 .map(this::convertToDto)
@@ -69,6 +69,7 @@ public class AircraftRestController extends AbstractRestController<Aircraft, Air
             content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = AircraftDto.class)) })
     public List<AircraftDto> findByManufacturer(@PathVariable String manufacturerName) {
+        log.info("Searching for aircrafts by manufacturer={}", manufacturerName);
         return aircraftService.getByManufacturer(manufacturerName)
                 .stream()
                 .map(this::convertToDto)

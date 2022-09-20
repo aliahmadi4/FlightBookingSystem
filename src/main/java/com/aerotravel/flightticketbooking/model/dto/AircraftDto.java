@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,7 +17,8 @@ public class AircraftDto implements IdedEntity{
     private String manufacturer;
     private String model;
     private Integer numberOfSeats;
-    private List<Long> flightIds;
+    @Builder.Default
+    private List<Long> flightIds = new ArrayList<>();
 
     @Override
     public long getId() {

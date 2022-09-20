@@ -9,22 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder(builderMethodName = "internalBuilder")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto implements IdedEntity {
-    private Long id;
+    private long id;
     private String firstname;
     private String middlename;
     private String lastname;
     private String username;
     private String email;
     private String password;
+    @Builder.Default
     private List<String> roleNames = new ArrayList<>();
-
-    public static UserDtoBuilder builder() {
-        return internalBuilder().roleNames(new ArrayList<>());
-    }
 
     @Override
     public long getId() {
