@@ -46,5 +46,4 @@ e.g.
 - Add data generator.
 - Add more unit and integration tests.
 - REST API: use merge on update instead of save.
-- REST API: add Error Message Handling.
-- REST API: secure(admin oly).
+- REST API: secure(admin only).
