@@ -2,11 +2,15 @@
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/master-page}">
-<meta charset="UTF-8">
-<title>Customers</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Passengers</title>
+    <div th:replace="layout/master-page :: header-css"/>
+    <style type="text/css"></style>
+</head>
 </head>
 <body>
+<div class="header" th:replace="layout/master-page :: header"/>
 <th:block layout:fragment="content">
     <div class="row" style="margin-bottom: 10px">
         <div class="col-md-12">

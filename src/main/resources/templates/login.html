@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/master-page}">
-
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+     <!-- layout:decorate="~{layout/master-page}">-->
+     <head>
+         <title>Log in</title>
+         <meta charset="UTF-8">
+         <div th:replace="layout/master-page :: header-css"/>
+         <style type="text/css"></style>
+     </head>
 <body>
+<div class="header" th:replace="layout/master-page :: header"/>
 <th:block layout:fragment="content">
     <div class="row justify-content-md-center">
         <div class="col-md-4 jumbotron">

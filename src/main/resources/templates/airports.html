@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/master-page}">
-<meta charset="UTF-8">
-<title>Customers</title>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Airports</title>
+    <div th:replace="layout/master-page :: header-css"/>
+    <style type="text/css"></style>
 </head>
 <body>
+<div class="header" th:replace="layout/master-page :: header"/>
 <th:block layout:fragment="content">
-    <div class="row"  style="margin-bottom: 10px">
+    <div class="row" style="margin-bottom: 10px">
         <div class="col-md-6">
             <h1 style="color: darkblue">Airports List </h1>
         </div>
         <div class="col-md-6">
-            <a href="/airport/new"><button type="button" class="btn btn-outline-primary" style="float: right">Add Airport</button></a>
+            <a href="/airport/new">
+                <button type="button" class="btn btn-outline-primary" style="float: right">Add Airport</button>
+            </a>
         </div>
     </div>
     <table class="table table-hover">
@@ -37,7 +42,11 @@
                 <td th:text="${airport.city}"></td>
                 <td th:text="${airport.state}"></td>
                 <td th:text="${airport.country}"></td>
-                <td ><a th:href="@{/airport/delete(airportId=${airport.airportId})}"><button type="button" class="btn btn-outline-danger btn-sm" onclick="alert('are you sure you want to delete?')">Delete</button></a></td>
+                <td><a th:href="@{/airport/delete(airportId=${airport.airportId})}">
+                    <button type="button" class="btn btn-outline-danger btn-sm"
+                            onclick="alert('are you sure you want to delete?')">Delete
+                    </button>
+                </a></td>
             </tr>
         </div>
         </tbody>
