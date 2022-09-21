@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/master-page}">
-<meta charset="UTF-8">
-<title>Customers</title>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Trees</title>
+    <div th:replace="layout/master-page :: header-css"/>
+    <style type="text/css"></style>
 </head>
 <body>
+<div class="header" th:replace="layout/master-page :: header"/>
 <th:block layout:fragment="content">
-    <div class="row"  style="margin-bottom: 10px">
+    <div class="row" style="margin-bottom: 10px">
         <div class="col-md-6">
             <h1 style="color: darkblue">Aircrafts List </h1>
         </div>
         <div class="col-md-6">
-            <a href="/aircraft/new"><button type="button" class="btn btn-outline-primary" style="float: right">Add Aircraft</button></a>
+            <a href="/aircraft/new">
+                <button type="button" class="btn btn-outline-primary" style="float: right">Add Aircraft</button>
+            </a>
         </div>
     </div>
     <table class="table table-hover">
@@ -33,7 +38,11 @@
                 <td th:text="${aircraft.manufacturer}"></td>
                 <td th:text="${aircraft.model}"></td>
                 <td th:text="${aircraft.numberOfSeats}"></td>
-                <td ><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}" ><button type="button" class="btn btn-outline-danger btn-sm"  onclick="alert('Are you sure you want to delete?')">Delete</button></a></td>
+                <td><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">
+                    <button type="button" class="btn btn-outline-danger btn-sm"
+                            onclick="alert('Are you sure you want to delete?')">Delete
+                    </button>
+                </a></td>
             </tr>
         </div>
         </tbody>
@@ -49,8 +58,6 @@
                 </li>
             </th:block>
         </ul>
-
-
     </div>
 </th:block>
 </body>
