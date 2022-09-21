@@ -33,7 +33,7 @@ public class DataGenRestController {
     private final FlightRepository flightRepository;
     private final PassengerRepository passengerRepository;
 
-    private final Faker faker = new Faker();
+    private final Faker faker = new Faker(Locale.ENGLISH);
     private final Name nameFaker = faker.name();
     private final Aviation aviaFaker = faker.aviation();
     private final DateAndTime dateFaker = faker.date();
