@@ -36,7 +36,6 @@ public class DataGenRestController {
     private final Faker faker = new Faker();
     private final Name nameFaker = faker.name();
     private final Aviation aviaFaker = faker.aviation();
-    private final Lorem loremFaker = faker.lorem();
     private final DateAndTime dateFaker = faker.date();
     private final Address addressFaker = faker.address();
 

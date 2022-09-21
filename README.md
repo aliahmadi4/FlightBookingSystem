@@ -43,7 +43,5 @@ e.g.
 # TODO:
 - UI: fix/make prettier.
 - Cleanup documentation.
-- Add data generator.
 - Add more unit and integration tests.
 - REST API: use merge on update instead of save.
-- REST API: secure(admin only).
