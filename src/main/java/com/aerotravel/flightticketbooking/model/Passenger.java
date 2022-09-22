@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -22,17 +23,23 @@ public class Passenger {
     @GeneratedValue
     private long passengerId;
     @NotBlank
+    @Size(max = 300)
     private String firstName;
     @NotBlank
+    @Size(max = 300)
     private String lastName;
     @NotBlank
+    @Size(max = 30)
     private String phoneNumber;
     @NotBlank
+    @Size(max = 30)
     private String passportNumber;
 
     @Email
+    @Size(max = 300)
     private String email;
 
+    @Size(max = 300)
     private String address;
 
     @ManyToOne

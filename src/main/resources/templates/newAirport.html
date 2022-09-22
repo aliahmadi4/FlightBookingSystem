@@ -10,67 +10,69 @@
 
 <body>
 <div class="header" th:replace="layout/master-page :: header"/>
-<th:block layout:fragment="content">
-    <div class="row">
+<div class="container">
+    <th:block layout:fragment="content">
         <div class="row">
-            <div class="col-md-12" style="margin-bottom: 10px">
-                <h1 style="color: darkblue">Add New Airport </h1>
-            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 10px">
+                    <h1 style="color: darkblue">Add New Airport </h1>
+                </div>
 
+            </div>
         </div>
-    </div>
 
-    <form action="/airport/new" method="post" th:object="${airport}">
-        <div class="row">
+        <form action="/airport/new" method="post" th:object="${airport}">
+            <div class="row">
 
 
-            <div class="form-group col-md-6">
-                <label class="col-form-label" for="airportCode">Airport code</label>
-                <span class="badge badge-danger" th:errors="*{airportCode}"
-                      th:if="${#fields.hasErrors('airportCode')}"></span>
-                <input class="form-control" id="airportCode" name="airportCode" placeholder=""
-                       required th:value="${airport.airportCode}" type="text">
+                <div class="form-group col-md-6">
+                    <label class="col-form-label" for="airportCode">Airport code</label>
+                    <span class="badge badge-danger" th:errors="*{airportCode}"
+                          th:if="${#fields.hasErrors('airportCode')}"></span>
+                    <input class="form-control" id="airportCode" name="airportCode" placeholder=""
+                           required th:value="${airport.airportCode}" type="text">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-form-label" for="airportName">Airport Name</label>
+                    <span class="badge badge-danger" th:errors="*{airportName}"
+                          th:if="${#fields.hasErrors('airportName')}"></span>
+                    <input class="form-control" id="airportName" name="airportName" placeholder=""
+                           required th:value="${airport.airportName}" type="text">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="city">City</label>
+                    <span class="badge badge-danger" th:errors="*{city}"
+                          th:if="${#fields.hasErrors('city')}"></span>
+                    <input class="form-control" id="city" name="city" placeholder=""
+                           required th:value="${airport.city}" type="text">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="state">State</label>
+                    <span class="badge badge-danger" th:errors="*{state}"
+                          th:if="${#fields.hasErrors('state')}"></span>
+                    <input class="form-control" id="state" name="state" placeholder=""
+                           required th:value="${airport.state}" type="text">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="country">Country</label>
+                    <span class="badge badge-danger" th:errors="*{country}"
+                          th:if="${#fields.hasErrors('country')}"></span>
+                    <input class="form-control" id="country" name="country" placeholder=""
+                           required th:value="${airport.country}" type="text">
+                </div>
+
+                <div class="form-group col-12">
+                    <button class="btn btn-success" style="float: right" type="submit">Save</button>
+                </div>
+
             </div>
+        </form>
 
-            <div class="form-group col-md-6">
-                <label class="col-form-label" for="airportName">Airport Name</label>
-                <span class="badge badge-danger" th:errors="*{airportName}"
-                      th:if="${#fields.hasErrors('airportName')}"></span>
-                <input class="form-control" id="airportName" name="airportName" placeholder=""
-                       required th:value="${airport.airportName}" type="text">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label class="col-form-label" for="city">City</label>
-                <span class="badge badge-danger" th:errors="*{city}"
-                      th:if="${#fields.hasErrors('city')}"></span>
-                <input class="form-control" id="city" name="city" placeholder=""
-                       required th:value="${airport.city}" type="text">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label class="col-form-label" for="state">State</label>
-                <span class="badge badge-danger" th:errors="*{state}"
-                      th:if="${#fields.hasErrors('state')}"></span>
-                <input class="form-control" id="state" name="state" placeholder=""
-                       required th:value="${airport.state}" type="text">
-            </div>
-
-            <div class="form-group col-md-4">
-                <label class="col-form-label" for="country">Country</label>
-                <span class="badge badge-danger" th:errors="*{country}"
-                      th:if="${#fields.hasErrors('country')}"></span>
-                <input class="form-control" id="country" name="country" placeholder=""
-                       required th:value="${airport.country}" type="text">
-            </div>
-
-            <div class="form-group col-12">
-                <button class="btn btn-success" style="float: right" type="submit">Save</button>
-            </div>
-
-        </div>
-    </form>
-
-</th:block>
+    </th:block>
+</div>
 </body>
 </html>

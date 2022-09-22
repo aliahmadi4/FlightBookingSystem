@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,8 +26,12 @@ public class Aircraft {
     @Id
     @GeneratedValue
     private long aircraftId;
+    @Size(max = 300)
     private String manufacturer;
+    @Size(max = 300)
     private String model;
+    @Max(value = 1000, message = "* Number of seats cannot be too big.")
+    @Min(value = 1, message = "* Number of seats cannot be too small.")
     private Integer numberOfSeats;
     @OneToMany(mappedBy = "aircraft")
     @Builder.Default

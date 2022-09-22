@@ -10,39 +10,41 @@
 </head>
 <body>
 <div class="header" th:replace="layout/master-page :: header"/>
-<th:block layout:fragment="content">
-    <div class="row justify-content-md-center">
-        <div class="col-md-4 jumbotron">
-            <h2 style="text-align: center">Login Form</h2>
+<div class="container">
+    <th:block layout:fragment="content">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 jumbotron">
+                <h2 style="text-align: center">Login Form</h2>
 
-            <form method="post" name="formLogin" th:action="@{/login}">
-                <div class="alert alert-dismissible alert-danger" th:if="${param.error}">
-                    <button class="close" data-dismiss="alert" type="button">&times;</button>
-                    Invalid username and/or password.
-                </div>
-                <div class="alert alert-dismissible alert-primary" th:if="${param.logout}">
-                    <button class="close" data-dismiss="alert" type="button">&times;</button>
-                    You have been signed out.
-                </div>
-                <div class="form-group">
-                    <label for="txtUsername">Username</label>
-                    <!-- <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-                          class="alert alert-danger"></span> -->
-                    <input autofocus="autofocus" class="form-control" id="txtUsername" name="username" type="text"/>
-                </div>
-                <div class="form-group">
-                    <label for="txtPassword">Password</label>
-                    <!-- <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                          class="alert alert-danger"></span> -->
-                    <input class="form-control" id="txtPassword" name="password" type="password"/>
-                </div>
-                <div style="float:right;">
-                    <a class="btn btn-outline-warning" href="/">Cancel</a>&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-outline-success" id="btnSubmit" type="submit">Sign In</button>
-                </div>
-            </form>
+                <form method="post" name="formLogin" th:action="@{/login}">
+                    <div class="alert alert-dismissible alert-danger" th:if="${param.error}">
+                        <button class="close" data-dismiss="alert" type="button">&times;</button>
+                        Invalid username and/or password.
+                    </div>
+                    <div class="alert alert-dismissible alert-primary" th:if="${param.logout}">
+                        <button class="close" data-dismiss="alert" type="button">&times;</button>
+                        You have been signed out.
+                    </div>
+                    <div class="form-group">
+                        <label for="txtUsername">Username</label>
+                        <!-- <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                              class="alert alert-danger"></span> -->
+                        <input autofocus="autofocus" class="form-control" id="txtUsername" name="username" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPassword">Password</label>
+                        <!-- <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                              class="alert alert-danger"></span> -->
+                        <input class="form-control" id="txtPassword" name="password" type="password"/>
+                    </div>
+                    <div style="float:right;">
+                        <a class="btn btn-outline-warning" href="/">Cancel</a>&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-outline-success" id="btnSubmit" type="submit">Sign In</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</th:block>
+    </th:block>
+</div>
 </body>
 </html>

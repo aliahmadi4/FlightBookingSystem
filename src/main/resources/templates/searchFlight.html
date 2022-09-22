@@ -9,102 +9,104 @@
 </head>
 <body>
 <div class="header" th:replace="layout/master-page :: header"/>
-<th:block layout:fragment="content">
-    <div class="row">
+<div class="container">
+    <th:block layout:fragment="content">
         <div class="row">
-            <div class="col-md-12" style="margin-bottom: 10px">
-                <h1 style="color: darkblue">Search a Flight</h1>
-            </div>
-
-        </div>
-    </div>
-
-    <form action="/flight/search" method="post">
-        <div class="row">
-
-
-            <div class="from-group col-md-4">
-                <label class="col-form-label" for="departureAirport">From</label>
-                <select class="form-control" id="departureAirport" name="departureAirport">
-                    <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
-                            th:value="${airport.airportId}">
-                    </option>
-                </select>
-            </div>
-
-            <div class="from-group col-md-4">
-                <label class="col-form-label" for="destinationAirport">To</label>
-                <span class="badge badge-danger" th:if="${AirportError!=null}"
-                      th:text="${AirportError}"></span>
-                <select class="form-control" id="destinationAirport" name="destinationAirport">
-                    <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
-                            th:value="${airport.airportId}">
-                    </option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-4">
-                <label class="col-form-label" for="departureTime">Departure Time</label>
-                <input class="form-control" id="departureTime" name="departureTime" placeholder=""
-                       required type="date">
-            </div>
-
-
-            <div class="form-group col-12">
-                <button class="btn btn-success" style="float: right" type="submit">Search</button>
-            </div>
-
-        </div>
-    </form>
-    <div class="row">
-        <th:block th:if="${notFound !=null}">
-            <div class="col-12">
-                <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">No Record Found!</p>
-            </div>
-        </th:block>
-        <th:block th:if="${flights!=null}">
-            <div class="row" style="margin-bottom: 10px">
-                <div class="col-md-6">
-                    <h1 style="color: darkblue">Result </h1>
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 10px">
+                    <h1 style="color: darkblue">Search a Flight</h1>
                 </div>
 
             </div>
-            <table class="table table-sm">
-                <thead>
-                <tr class="table-active">
-                    <th scope="col">ID</th>
-                    <th scope="col">Flight Number</th>
-                    <th scope="col">From</th>
-                    <th scope="col">To</th>
-                    <th scope="col">Departure time</th>
-                    <th scope="col">Arrival time</th>
-                    <th scope="col">Flight Charge</th>
-                    <th scope="col">Aircraft</th>
-                    <th scope="col">Available Seats</th>
-                </tr>
-                </thead>
-                <tbody>
-                <div th:each="flight, iterStat:${flights}">
-                    <tr style="background-color: #fdfdfd">
-                        <th scope="row" th:text="${flight.flightId}">Dark</th>
-                        <td th:text="${flight.flightNumber}"></td>
-                        <td th:text="${flight.departureAirport.airportName}"></td>
-                        <td th:text="${flight.destinationAirport.airportName}"></td>
-                        <td th:text="${flight.departureDate+' '+flight.departureTime}"></td>
-                        <td th:text="${flight.arrivalDate+' '+flight.arrivalTime}"></td>
-                        <td th:text="${flight.flightCharge}"></td>
-                        <td th:text="${flight.aircraft.model}"></td>
-                        <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
+        </div>
+
+        <form action="/flight/search" method="post">
+            <div class="row">
+
+
+                <div class="from-group col-md-4">
+                    <label class="col-form-label" for="departureAirport">From</label>
+                    <select class="form-control" id="departureAirport" name="departureAirport">
+                        <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
+                                th:value="${airport.airportId}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="from-group col-md-4">
+                    <label class="col-form-label" for="destinationAirport">To</label>
+                    <span class="badge badge-danger" th:if="${AirportError!=null}"
+                          th:text="${AirportError}"></span>
+                    <select class="form-control" id="destinationAirport" name="destinationAirport">
+                        <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
+                                th:value="${airport.airportId}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="departureTime">Departure Time</label>
+                    <input class="form-control" id="departureTime" name="departureTime" placeholder=""
+                           required type="date">
+                </div>
+
+
+                <div class="form-group col-12">
+                    <button class="btn btn-success" style="float: right" type="submit">Search</button>
+                </div>
+
+            </div>
+        </form>
+        <div class="row">
+            <th:block th:if="${notFound !=null}">
+                <div class="col-12">
+                    <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">No Record Found!</p>
+                </div>
+            </th:block>
+            <th:block th:if="${flights!=null}">
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-md-6">
+                        <h1 style="color: darkblue">Result </h1>
+                    </div>
+
+                </div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr class="table-active">
+                        <th scope="col">ID</th>
+                        <th scope="col">Flight Number</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Departure time</th>
+                        <th scope="col">Arrival time</th>
+                        <th scope="col">Flight Charge</th>
+                        <th scope="col">Aircraft</th>
+                        <th scope="col">Available Seats</th>
                     </tr>
-                </div>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <div th:each="flight, iterStat:${flights}">
+                        <tr style="background-color: #fdfdfd">
+                            <th scope="row" th:text="${flight.flightId}">Dark</th>
+                            <td th:text="${flight.flightNumber}"></td>
+                            <td th:text="${flight.departureAirport.airportName}"></td>
+                            <td th:text="${flight.destinationAirport.airportName}"></td>
+                            <td th:text="${flight.departureDate+' '+flight.departureTime}"></td>
+                            <td th:text="${flight.arrivalDate+' '+flight.arrivalTime}"></td>
+                            <td th:text="${flight.flightCharge}"></td>
+                            <td th:text="${flight.aircraft.model}"></td>
+                            <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
 
-        </th:block>
+            </th:block>
 
-    </div>
+        </div>
 
 
-</th:block>
+    </th:block>
+</div>
 </body>
 </html>
