@@ -10,55 +10,58 @@
 </head>
 <body>
 <div class="header" th:replace="layout/master-page :: header"/>
-<th:block layout:fragment="content">
-    <div class="row" style="margin-bottom: 10px">
-        <div class="col-md-6">
-            <h1 style="color: darkblue">Aircrafts List </h1>
+<div class="container">
+    <th:block layout:fragment="content">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-md-6">
+                <h1 style="color: darkblue">Aircrafts List </h1>
+            </div>
+            <div class="col-md-6">
+                <a href="/aircraft/new">
+                    <button class="btn btn-outline-primary" style="float: right" type="button">Add Aircraft</button>
+                </a>
+            </div>
         </div>
-        <div class="col-md-6">
-            <a href="/aircraft/new">
-                <button class="btn btn-outline-primary" style="float: right" type="button">Add Aircraft</button>
-            </a>
-        </div>
-    </div>
-    <table class="table table-hover">
-        <thead>
-        <tr class="table-active">
-            <th scope="col">ID</th>
-            <th scope="col">Manufacturer</th>
-            <th scope="col">Model</th>
-            <th scope="col">Number of seats</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <div th:each="aircraft, iterStat:${aircrafts}">
-            <tr cstyle="background-color: #fdfdfd">
-                <th scope="row" th:text="${aircraft.aircraftId}">Dark</th>
-                <td th:text="${aircraft.manufacturer}"></td>
-                <td th:text="${aircraft.model}"></td>
-                <td th:text="${aircraft.numberOfSeats}"></td>
-                <td><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">
-                    <button class="btn btn-outline-danger btn-sm" onclick="alert('Are you sure you want to delete?')"
-                            type="button">Delete
-                    </button>
-                </a></td>
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-active">
+                <th scope="col">ID</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Model</th>
+                <th scope="col">Number of seats</th>
+                <th scope="col"></th>
             </tr>
-        </div>
-        </tbody>
-    </table>
-    <div>
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#">Pages:</a>
-            </li>
-            <th:block th:each="i:${#numbers.sequence(1,aircrafts.totalPages)}">
-                <li th:class="${currentPage}==(${i-1}) ? 'page-item active' : 'page-item'">
-                    <a class="page-link" th:href="@{/aircrafts(pageNo=(${i-1}))}" th:text="${i}"></a>
+            </thead>
+            <tbody>
+            <div th:each="aircraft, iterStat:${aircrafts}">
+                <tr cstyle="background-color: #fdfdfd">
+                    <th scope="row" th:text="${aircraft.aircraftId}">Dark</th>
+                    <td th:text="${aircraft.manufacturer}"></td>
+                    <td th:text="${aircraft.model}"></td>
+                    <td th:text="${aircraft.numberOfSeats}"></td>
+                    <td><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">
+                        <button class="btn btn-outline-danger btn-sm"
+                                onclick="alert('Are you sure you want to delete?')"
+                                type="button">Delete
+                        </button>
+                    </a></td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <div>
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Pages:</a>
                 </li>
-            </th:block>
-        </ul>
-    </div>
-</th:block>
+                <th:block th:each="i:${#numbers.sequence(1,aircrafts.totalPages)}">
+                    <li th:class="${currentPage}==(${i-1}) ? 'page-item active' : 'page-item'">
+                        <a class="page-link" th:href="@{/aircrafts(pageNo=(${i-1}))}" th:text="${i}"></a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </th:block>
+</div>
 </body>
 </html>

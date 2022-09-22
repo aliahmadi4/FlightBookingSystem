@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Flight {
     @Id
     @GeneratedValue
     private long flightId;
+    @Size(max = 30)
     private String flightNumber;
     @ManyToOne
     private Airport departureAirport;
@@ -37,6 +40,7 @@ public class Flight {
     private LocalDate arrivalDate;
     private String departureTime;
     private String arrivalTime;
+    @PositiveOrZero
     private double flightCharge;
 
     public Flight(String flightNumber, Airport departureAirport, Airport destinationAirport,
