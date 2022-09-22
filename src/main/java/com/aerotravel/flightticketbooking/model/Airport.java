@@ -17,19 +17,18 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Airport {
+    @OneToMany(mappedBy = "departureAirport")
+    @Builder.Default
+    List<Flight> flights = new ArrayList<>();
     @Id
     @GeneratedValue
     private long airportId;
-    @Column(unique=true)
+    @Column(unique = true)
     private String airportCode;
     private String airportName;
     private String city;
     private String state;
     private String country;
-
-    @OneToMany(mappedBy = "departureAirport")
-    @Builder.Default
-    List<Flight> flights = new ArrayList<>();
 
     public Airport(String airportCode, String airportName, String city, String state, String country) {
         this.airportCode = airportCode;

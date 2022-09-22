@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
 <head>
     <meta charset="UTF-8">
     <title>Search for flight</title>
@@ -34,8 +34,8 @@
 
             <div class="from-group col-md-4">
                 <label class="col-form-label" for="destinationAirport">To</label>
-                <span th:if="${AirportError!=null}" th:text="${AirportError}"
-                      class="badge badge-danger"></span>
+                <span class="badge badge-danger" th:if="${AirportError!=null}"
+                      th:text="${AirportError}"></span>
                 <select class="form-control" id="destinationAirport" name="destinationAirport">
                     <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
                             th:value="${airport.airportId}">
@@ -45,13 +45,13 @@
 
             <div class="form-group col-md-4">
                 <label class="col-form-label" for="departureTime">Departure Time</label>
-                <input type="date" class="form-control" placeholder="" id="departureTime"
-                       name="departureTime" required>
+                <input class="form-control" id="departureTime" name="departureTime" placeholder=""
+                       required type="date">
             </div>
 
 
             <div class="form-group col-12">
-                <button type="submit" class="btn btn-success" style="float: right">Search</button>
+                <button class="btn btn-success" style="float: right" type="submit">Search</button>
             </div>
 
         </div>

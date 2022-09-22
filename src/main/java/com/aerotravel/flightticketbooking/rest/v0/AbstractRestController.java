@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
+
 @Slf4j
 public abstract class AbstractRestController<E, D extends IdedEntity> {
 
@@ -17,7 +18,9 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
     protected ModelMapper modelMapper;
 
     protected abstract EntityService<E> getService();
+
     protected abstract D convertToDto(E entity);
+
     protected abstract E convertToEntity(D entityDto);
 
     @GetMapping

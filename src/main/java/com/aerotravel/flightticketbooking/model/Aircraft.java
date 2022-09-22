@@ -54,6 +54,7 @@ public class Aircraft {
                 .filter(Objects::nonNull).map(Flight::getFlightNumber).collect(Collectors.toList()) +
                 '}';
     }
+
     public String toShortString() {
         return "Aircraft{" +
                 "aircraftId=" + aircraftId +

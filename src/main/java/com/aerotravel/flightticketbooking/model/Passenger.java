@@ -38,7 +38,7 @@ public class Passenger {
     @ManyToOne
     private Flight flight;
 
-    public Passenger( String firstName, String lastName, String phoneNumber, String passportNumber, String email, String address) {
+    public Passenger(String firstName, String lastName, String phoneNumber, String passportNumber, String email, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

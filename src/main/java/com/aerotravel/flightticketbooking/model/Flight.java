@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Flight {
+    @ManyToOne
+    Aircraft aircraft;
+    @OneToMany(mappedBy = "flight")
+    @Builder.Default
+    List<Passenger> passengers = new ArrayList<>();
     @Id
     @GeneratedValue
     private long flightId;
@@ -26,25 +31,13 @@ public class Flight {
     private Airport departureAirport;
     @ManyToOne
     private Airport destinationAirport;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate departureDate;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate arrivalDate;
-
     private String departureTime;
-
     private String arrivalTime;
-
     private double flightCharge;
-
-    @ManyToOne
-    Aircraft aircraft;
-
-    @OneToMany(mappedBy = "flight")
-    @Builder.Default
-    List<Passenger> passengers = new ArrayList<>();
 
     public Flight(String flightNumber, Airport departureAirport, Airport destinationAirport,
                   double flightCharge, LocalDate departureDate, LocalDate arrivalDate) {

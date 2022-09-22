@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AircraftDto implements IdedEntity{
+public class AircraftDto implements IdedEntity {
     private long aircraftId;
     private String manufacturer;
     private String model;

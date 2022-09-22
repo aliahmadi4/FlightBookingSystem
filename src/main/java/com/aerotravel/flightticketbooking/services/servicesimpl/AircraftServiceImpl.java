@@ -14,7 +14,7 @@ public class AircraftServiceImpl extends AbstractEntityServiceImpl<Aircraft> imp
     private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public AircraftServiceImpl(AircraftRepository aircraftRepository){
+    public AircraftServiceImpl(AircraftRepository aircraftRepository) {
         this.aircraftRepository = aircraftRepository;
     }
 

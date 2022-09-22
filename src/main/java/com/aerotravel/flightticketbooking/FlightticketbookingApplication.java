@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @EnableJpaRepositories("com.aerotravel.flightticketbooking.repository")
 @EntityScan("com.aerotravel.flightticketbooking.model")
@@ -67,9 +68,15 @@ public class FlightticketbookingApplication {
         var role = roles.stream()
                 .filter(r -> r.getName().toUpperCase().contains(roleSign)).findFirst().orElse(null);
         var candidate = users.stream()
-                .filter(u -> Objects.nonNull(u) && u.getRoles().contains(role))
+                .filter(u -> {
+                    if (!Objects.nonNull(u)) return false;
+                    assert role != null;
+                    return u.getRoles().stream().map(Role::getId).collect(Collectors.toList())
+                    .contains(role.getId());
+                })
                 .findFirst().orElse(null);
         if (null == candidate) {
+            assert role != null;
             var admin = User.builder()
                     .username(username)
                     .password(password)
