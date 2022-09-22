@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add new flight</title>
@@ -25,8 +25,8 @@
 
             <div class="from-group col-md-4">
                 <label class="col-form-label" for="aircraft">Aircraft</label>
-                <span th:if="${#fields.hasErrors('aircraft')}" th:errors="*{aircraft}"
-                      class="badge badge-danger"></span>
+                <span class="badge badge-danger" th:errors="*{aircraft}"
+                      th:if="${#fields.hasErrors('aircraft')}"></span>
                 <select class="form-control" id="aircraft" name="aircraft">
                     <option th:each="a, i:${aircrafts}" th:text="${a.model}"
                             th:value="${a.aircraftId}">
@@ -37,8 +37,8 @@
 
             <div class="from-group col-md-4">
                 <label class="col-form-label" for="departureAirport">Departure Airport</label>
-                <span th:if="${#fields.hasErrors('departureAirport')}" th:errors="*{departureAirport}"
-                      class="badge badge-danger"></span>
+                <span class="badge badge-danger" th:errors="*{departureAirport}"
+                      th:if="${#fields.hasErrors('departureAirport')}"></span>
                 <select class="form-control" id="departureAirport" name="departureAirport">
                     <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
                             th:value="${airport.airportId}">
@@ -48,10 +48,10 @@
 
             <div class="from-group col-md-4">
                 <label class="col-form-label" for="destinationAirport">Destination Airport</label>
-                <span th:if="${#fields.hasErrors('destinationAirport')}" th:errors="*{destinationAirport}"
-                      class="badge badge-danger"></span>
-                <span th:if="${sameAirportError!=null}" th:text="${sameAirportError}"
-                      class="badge badge-danger"></span>
+                <span class="badge badge-danger" th:errors="*{destinationAirport}"
+                      th:if="${#fields.hasErrors('destinationAirport')}"></span>
+                <span class="badge badge-danger" th:if="${sameAirportError!=null}"
+                      th:text="${sameAirportError}"></span>
                 <select class="form-control" id="destinationAirport" name="destinationAirport">
                     <option th:each="airport, i:${airports}" th:text="${airport.airportName}"
                             th:value="${airport.airportId}">
@@ -61,53 +61,53 @@
 
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="departureDate">Departure Date</label>
-                <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"
-                      class="badge badge-danger"></span>
-                <input type="date" class="form-control" id="departureDate"
-                       name="departureDate" th:value="${flight.departureDate}" required>
+                <span class="badge badge-danger" th:errors="*{departureDate}"
+                      th:if="${#fields.hasErrors('departureDate')}"></span>
+                <input class="form-control" id="departureDate" name="departureDate"
+                       required th:value="${flight.departureDate}" type="date">
             </div>
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="departureTime">Departure Time</label>
-                <span th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"
-                      class="badge badge-danger"></span>
-                <input type="time" class="form-control" id="departureTime"
-                       name="departureTime">
+                <span class="badge badge-danger" th:errors="*{departureTime}"
+                      th:if="${#fields.hasErrors('departureTime')}"></span>
+                <input class="form-control" id="departureTime" name="departureTime"
+                       type="time">
             </div>
 
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="arrivalDate">Arrival Date</label>
-                <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"
-                      class="badge badge-danger"></span>
-                <input type="date" class="form-control" id="arrivalDate"
-                       name="arrivalDate" th:value="${flight.arrivalDate}" required>
+                <span class="badge badge-danger" th:errors="*{arrivalDate}"
+                      th:if="${#fields.hasErrors('arrivalDate')}"></span>
+                <input class="form-control" id="arrivalDate" name="arrivalDate"
+                       required th:value="${flight.arrivalDate}" type="date">
             </div>
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="arrivalTime">Arrival Time</label>
-                <span th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"
-                      class="badge badge-danger"></span>
-                <input type="time" class="form-control" id="arrivalTime"
-                       name="arrivalTime">
+                <span class="badge badge-danger" th:errors="*{arrivalTime}"
+                      th:if="${#fields.hasErrors('arrivalTime')}"></span>
+                <input class="form-control" id="arrivalTime" name="arrivalTime"
+                       type="time">
             </div>
 
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="flightNumber">Flight Number</label>
-                <span th:if="${#fields.hasErrors('flightNumber')}" th:errors="*{flightNumber}"
-                      class="badge badge-danger"></span>
-                <input type="text" class="form-control" placeholder="" id="flightNumber"
-                       name="flightNumber" th:value="${flight.flightNumber}" required>
+                <span class="badge badge-danger" th:errors="*{flightNumber}"
+                      th:if="${#fields.hasErrors('flightNumber')}"></span>
+                <input class="form-control" id="flightNumber" name="flightNumber" placeholder=""
+                       required th:value="${flight.flightNumber}" type="text">
             </div>
 
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="flightCharge">Flight Charge</label>
-                <span th:if="${#fields.hasErrors('flightCharge')}" th:errors="*{flightCharge}"
-                      class="badge badge-danger"></span>
-                <input type="double" class="form-control" placeholder="" id="flightCharge"
-                       name="flightCharge" th:value="${flight.flightCharge}" required>
+                <span class="badge badge-danger" th:errors="*{flightCharge}"
+                      th:if="${#fields.hasErrors('flightCharge')}"></span>
+                <input class="form-control" id="flightCharge" name="flightCharge" placeholder=""
+                       required th:value="${flight.flightCharge}" type="double">
             </div>
 
 
             <div class="form-group col-12">
-                <button type="submit" class="btn btn-success" style="float: right">Save</button>
+                <button class="btn btn-success" style="float: right" type="submit">Save</button>
             </div>
 
         </div>

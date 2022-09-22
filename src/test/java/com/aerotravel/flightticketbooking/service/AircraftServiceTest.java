@@ -17,14 +17,11 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class AircraftServiceTest {
 
+    Aircraft aircraft = new Aircraft("Boing", "737", 700);
     @Autowired
     private AircraftService aircraftService;
-
     @MockBean
     private AircraftRepository aircraftRepository;
-
-    Aircraft aircraft = new Aircraft("Boing", "737", 700);
-
 
     //test if the saveAircraft() method.
     @Test

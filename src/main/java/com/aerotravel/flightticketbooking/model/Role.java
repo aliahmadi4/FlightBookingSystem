@@ -11,21 +11,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable=false, unique=true)
+    @Column(nullable = false, unique = true)
     @NotEmpty
     private String name;
 
-    @ManyToMany(mappedBy="roles")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     @Override

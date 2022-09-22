@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add new aircraft</title>
@@ -26,31 +26,31 @@
 
                 <div class="form-group">
                     <label class="col-form-label" for="manufacturer">Manufacturer</label>
-                    <span th:if="${#fields.hasErrors('manufacturer')}" th:errors="*{manufacturer}"
-                          class="badge badge-danger"></span>
-                    <input type="text" class="form-control" placeholder="" id="manufacturer"
-                           name="manufacturer" th:value="${aircraft.manufacturer}" required>
+                    <span class="badge badge-danger" th:errors="*{manufacturer}"
+                          th:if="${#fields.hasErrors('manufacturer')}"></span>
+                    <input class="form-control" id="manufacturer" name="manufacturer" placeholder=""
+                           required th:value="${aircraft.manufacturer}" type="text">
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="model">Model</label>
-                    <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}"
-                          class="badge badge-danger"></span>
-                    <input type="text" class="form-control" placeholder="" id="model"
-                           name="model" th:value="${aircraft.model}" required>
+                    <span class="badge badge-danger" th:errors="*{model}"
+                          th:if="${#fields.hasErrors('model')}"></span>
+                    <input class="form-control" id="model" name="model" placeholder=""
+                           required th:value="${aircraft.model}" type="text">
                 </div>
 
                 <div class="form-group">
                     <label class="col-form-label" for="numberOfSeats">Number of seats</label>
-                    <span th:if="${#fields.hasErrors('numberOfSeats')}" th:errors="*{numberOfSeats}"
-                          class="badge badge-danger"></span>
-                    <input type="text" class="form-control" placeholder="" id="numberOfSeats"
-                           name="numberOfSeats" th:value="${aircraft.numberOfSeats}" required>
+                    <span class="badge badge-danger" th:errors="*{numberOfSeats}"
+                          th:if="${#fields.hasErrors('numberOfSeats')}"></span>
+                    <input class="form-control" id="numberOfSeats" name="numberOfSeats" placeholder=""
+                           required th:value="${aircraft.numberOfSeats}" type="text">
                 </div>
 
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success" style="float: right">Save</button>
+                    <button class="btn btn-success" style="float: right" type="submit">Save</button>
                 </div>
 
 

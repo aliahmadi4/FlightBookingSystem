@@ -53,8 +53,8 @@ public class AircraftRestController extends AbstractRestController<Aircraft, Air
     @GetMapping("/model/{modelName}")
     @Operation(summary = "Attempt to get an aircraft by its model name.")
     @ApiResponse(responseCode = "200", description = "Found aircraft(s).",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AircraftDto.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = AircraftDto.class))})
     public List<AircraftDto> findByModel(@PathVariable String modelName) {
         log.info("Searching for aircrafts by model={}", modelName);
         return aircraftService.getByModel(modelName)
@@ -66,8 +66,8 @@ public class AircraftRestController extends AbstractRestController<Aircraft, Air
     @GetMapping("/manufacturer/{manufacturerName}")
     @Operation(summary = "Attempt to get an aircraft by its manufacturer name.")
     @ApiResponse(responseCode = "200", description = "Found aircraft(s).",
-            content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AircraftDto.class)) })
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = AircraftDto.class))})
     public List<AircraftDto> findByManufacturer(@PathVariable String manufacturerName) {
         log.info("Searching for aircrafts by manufacturer={}", manufacturerName);
         return aircraftService.getByManufacturer(manufacturerName)

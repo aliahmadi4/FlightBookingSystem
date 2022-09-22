@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Flights</title>
@@ -11,12 +11,14 @@
 <body>
 <div class="header" th:replace="layout/master-page :: header"/>
 <th:block layout:fragment="content">
-    <div class="row"  style="margin-bottom: 10px">
+    <div class="row" style="margin-bottom: 10px">
         <div class="col-md-6">
             <h1 style="color: darkblue">Flights List </h1>
         </div>
         <div class="col-md-6">
-            <a href="/flight/new"><button type="button" class="btn btn-outline-primary" style="float: right">Add Flight</button></a>
+            <a href="/flight/new">
+                <button class="btn btn-outline-primary" style="float: right" type="button">Add Flight</button>
+            </a>
         </div>
     </div>
     <table class="table table-sm">
@@ -47,8 +49,12 @@
                 <td th:text="${flight.flightCharge}"></td>
                 <td th:text="${flight.aircraft.model}"></td>
                 <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
-                <td ><a th:href="@{/passengers(flightId=${flight.flightId})}">...</a></td>
-                <td ><a th:href="@{/flight/delete(flightId=${flight.flightId})}"><button type="button" class="btn btn-outline-danger btn-sm"  onclick="alert('Are you sure to cancel this flight?')">Cancel</button></a></td>
+                <td><a th:href="@{/passengers(flightId=${flight.flightId})}">...</a></td>
+                <td><a th:href="@{/flight/delete(flightId=${flight.flightId})}">
+                    <button class="btn btn-outline-danger btn-sm" onclick="alert('Are you sure to cancel this flight?')"
+                            type="button">Cancel
+                    </button>
+                </a></td>
             </tr>
         </div>
         </tbody>

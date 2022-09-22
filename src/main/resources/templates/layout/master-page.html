@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Aero Travel</title>
     <div th:fragment="header-css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
               integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-              crossorigin="anonymous">
+              rel="stylesheet">
     </div>
 
 </head>
@@ -17,12 +17,12 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 20px">
         <a class="navbar-brand" href="#">
-            <img src="/img/aero-ico.png" height="25">
+            <img height="25" src="/img/aero-ico.png">
             FTB
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarColor02" data-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -58,17 +58,21 @@
             </ul>
             <div class="navbar-right col-md-6">
                 <div sec:authorize="isAuthenticated()" style="float: right">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <svg class="bi bi-person-circle" fill="white" height="25" viewBox="0 0 16 16"
+                         width="25" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                              fill-rule="evenodd"></path>
                     </svg>
-                    <span style="color: white" sec:authentication="principal.username"></span>
+                    <span sec:authentication="principal.username" style="color: white"></span>
                     <a href="/logout">
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" style="margin-left: 20px;">Logout</button>
+                        <button class="btn btn-outline-light my-2 my-sm-0" style="margin-left: 20px;" type="submit">
+                            Logout
+                        </button>
                     </a>
                 </div>
                 <div sec:authorize="!isAuthenticated()" style="float: right">
-                    <a class="btn btn-success" type="submit" href="/login">Login</a>
+                    <a class="btn btn-success" href="/login" type="submit">Login</a>
                 </div>
             </div>
         </div>
@@ -77,15 +81,15 @@
         <th:block layout:fragment="content"></th:block>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    <script crossorigin="anonymous"
             integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-            crossorigin="anonymous"></script>
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"></script>
 </div>
 </body>
 </html>

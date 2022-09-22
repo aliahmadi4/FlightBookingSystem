@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Airports</title>
@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-6">
             <a href="/airport/new">
-                <button type="button" class="btn btn-outline-primary" style="float: right">Add Airport</button>
+                <button class="btn btn-outline-primary" style="float: right" type="button">Add Airport</button>
             </a>
         </div>
     </div>
@@ -43,8 +43,8 @@
                 <td th:text="${airport.state}"></td>
                 <td th:text="${airport.country}"></td>
                 <td><a th:href="@{/airport/delete(airportId=${airport.airportId})}">
-                    <button type="button" class="btn btn-outline-danger btn-sm"
-                            onclick="alert('are you sure you want to delete?')">Delete
+                    <button class="btn btn-outline-danger btn-sm" onclick="alert('are you sure you want to delete?')"
+                            type="button">Delete
                     </button>
                 </a></td>
             </tr>

@@ -14,46 +14,46 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     @NotBlank(message = "* First Name is required")
     private String firstname;
 
-    @Column(name="middlename", nullable=true)
+    @Column(name = "middlename", nullable = true)
     private String middlename;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     @NotBlank(message = "* Last Name is required")
     private String lastname;
 
-    @Column(nullable=false, unique=true)
+    @Column(nullable = false, unique = true)
     @NotBlank(message = "* Username is required")
     private String username;
 
-    @Column(nullable=false, unique=true)
+    @Column(nullable = false, unique = true)
     @NotBlank(message = "* Email is required")
-    @Email(message="{errors.invalid_email}")
+    @Email(message = "{errors.invalid_email}")
     private String email;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     @NotBlank(message = "* Password is required")
-    @Size(min=8)
+    @Size(min = 8)
     private String password;
 
-    @ManyToMany(cascade=CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
-            name="users_roles",
-            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     @Builder.Default
     private List<Role> roles = new ArrayList<>();
 
