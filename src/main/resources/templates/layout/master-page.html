@@ -29,30 +29,30 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
+                    <a id = "aHome" class="nav-link" href="/">Home</a>
                 </li>
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                     <li class="nav-item">
-                        <a class="nav-link" href="/airports">Airports</a>
+                        <a id = "aAirports" class="nav-link" href="/airports">Airports</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/aircrafts">Aircrafts</a>
+                        <a id = "aAircrafts" class="nav-link" href="/aircrafts">Aircrafts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/flights">Flights</a>
+                        <a id = "aFlights" class="nav-link" href="/flights">Flights</a>
                     </li>
                 </th:block>
                 <th:block sec:authorize="hasRole('ROLE_AGENT')">
                     <li class="nav-item">
-                        <a class="nav-link" href="/flight/book">Book Flight</a>
+                        <a id = "aBooking" class="nav-link" href="/flight/book">Book Flight</a>
                     </li>
                 </th:block>
                 <li class="nav-item">
-                    <a class="nav-link" href="/flight/search">Search Flight</a>
+                    <a id = "aSearch" class="nav-link" href="/flight/search">Search Flight</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/flight/book/verify">Verify Booking</a>
+                    <a id = "aVerify" class="nav-link" href="/flight/book/verify">Verify Booking</a>
                 </li>
 
             </ul>
@@ -64,15 +64,15 @@
                         <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                               fill-rule="evenodd"></path>
                     </svg>
-                    <span sec:authentication="principal.username" style="color: white"></span>
+                    <span id = "spUsername" sec:authentication="principal.username" style="color: white"></span>
                     <a href="/logout">
-                        <button class="btn btn-outline-light my-2 my-sm-0" style="margin-left: 20px;" type="submit">
+                        <button id = "btnLogout" class="btn btn-outline-light my-2 my-sm-0" style="margin-left: 20px;" type="submit">
                             Logout
                         </button>
                     </a>
                 </div>
                 <div sec:authorize="!isAuthenticated()" style="float: right">
-                    <a class="btn btn-success" href="/login" type="submit">Login</a>
+                    <a id = "aLogin" class="btn btn-success" href="/login" type="submit">Login</a>
                 </div>
             </div>
         </div>
