@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Occurred</title>
+    <meta charset="UTF-8">
+    <div th:replace="layout/master-page :: header-css"/>
+    <style>
+        th, td {
+          border: 1px solid #ddd;
+          padding: 15px;
+}
+
+    </style>
+</head>
+<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+<div class="container">
+    <div>
+        <form th:action="@{/}" method="get" style="horizontal-align:right;">
+            <button type="Submit" class="btn btn-success" id="btnSubmitGoToHome">Home</button>
+            <button onclick="alert('What a surprise!')"
+                    class="btn btn-md btn-warning btn-block"
+                    th:utext="${error}">Error?
+            </button>
+        </form>
+        </br>
+    </div>
+    <div style="vertical-align:middle; margin-left:12px; margin-right:12px;">
+        <h1 th:text="|[${httpStatus}]|">XYZ</h1>
+    </div>
+
+    <table id="tblErrDetails" class="table table-hover">
+        <tr class="table-active">
+            <td>Date</td>
+            <td id="tdTimestamp" th:text="${timestamp}"/>
+        </tr>
+        <tr style="background-color: #fdfdfd">
+            <td>Path</td>
+            <td id="tdPath" th:text="${path}"/>
+        </tr>
+        <tr class="table-active">
+            <td>Error</td>
+            <td id="tdErr" th:text="${error}"/>
+        </tr>
+        <tr style="background-color: #fdfdfd">
+            <td>Status</td>
+            <td id="tdStatus" th:text="${status}"/>
+        </tr>
+        <tr class="table-active">
+            <td>Message</td>
+            <td id="tdMsg" th:text="${message}"/>
+        </tr>
+        <tr style="background-color: #fdfdfd">
+            <td>Exception</td>
+            <td id="tdEx" th:text="${exception}"/>
+        </tr>
+        <tr class="table-active">
+            <td>Trace</td>
+            <td>
+                <pre id="tdTrace" th:text="${trace}"/>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
