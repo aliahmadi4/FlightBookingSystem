@@ -10,6 +10,7 @@ import com.aerotravel.flightticketbooking.repository.FlightRepository;
 import com.aerotravel.flightticketbooking.repository.PassengerRepository;
 import com.github.javafaker.*;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v0/aux/data")
+@Slf4j
 public class DataGenRestController {
     public static final int ALMOST_UPPER_BOUND = 12;
     private final AircraftRepository aircraftRepository;
@@ -51,11 +53,19 @@ public class DataGenRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Generate some random data. The response should contain some description on what was generated.")
     public Map<String, List<String>> generate() {
+        log.info("About to generate fake data.");
         Random rnd = new Random();
 
-        var aircrafts = createAircrafts(rnd);
-        var airports = createAirports();
-        var flights = createFlights(rnd, aircrafts, airports);
+        // Use both existing and freshly generated data.
+        createAircrafts(rnd);
+        var aircrafts = aircraftRepository.findAll();
+
+        createAirports();
+        var airports = airportRepository.findAll();
+
+        createFlights(rnd, aircrafts, airports);
+        var flights = flightRepository.findAll();
+
         var passengers = createPassengers(rnd, flights);
 
         var data = new TreeMap<String, List<String>>();
@@ -68,6 +78,7 @@ public class DataGenRestController {
     }
 
     private List<Aircraft> createAircrafts(Random rnd) {
+        log.info("About to create fake aircrafts.");
         List<Aircraft> aircrafts = new ArrayList<>();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             String model = aviaFaker.aircraft();
@@ -118,6 +129,7 @@ public class DataGenRestController {
     }
 
     private List<Airport> createAirports() {
+        log.info("About to create fake airports.");
         List<Airport> data = new ArrayList<>();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             var entry = Airport.builder()
@@ -138,10 +150,30 @@ public class DataGenRestController {
         data.add(new Airport("CLN", "California Airport", "California", "California", "United States"));
         data.add(new Airport("TEX", "Texas Airport", "Texas", "Texas", "United States"));
 
-        return airportRepository.saveAll(data);
+        var existingData = airportRepository.findAll();
+        var existingCodes = existingData.stream()
+                .map(Airport::getAirportCode)
+                .collect(Collectors.toList());
+        var filteredData = data.stream()
+                .filter(a-> !existingCodes.contains(a.getAirportCode())).collect(Collectors.toList());
+        try {
+            return airportRepository.saveAll(filteredData);
+        } catch (Exception e) {
+            if (null != e.getCause()
+                    && null != e.getCause().getCause()
+                    &&
+                    e.getCause()
+                            .getCause()
+                            .getMessage().contains("Duplicate entry")) {
+                log.error("Seems there are duplicate airport code upon fake data generating.", e);
+                return List.of();
+            }
+            throw new RuntimeException(e);
+        }
     }
 
     private List<Flight> createFlights(Random rnd, List<Aircraft> aircrafts, List<Airport> airports) {
+        log.info("About to create fake flights.");
         List<Flight> data = new ArrayList<>();
         var aircraftsCount = aircrafts.size();
         var airportsCount = airports.size();
@@ -168,6 +200,7 @@ public class DataGenRestController {
     }
 
     private List<Passenger> createPassengers(Random rnd, List<Flight> flights) {
+        log.info("About to create fake passengers.");
         List<Passenger> data = new ArrayList<>();
         var flightsCount = flights.size();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
