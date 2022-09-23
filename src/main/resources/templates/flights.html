@@ -18,11 +18,11 @@
             </div>
             <div class="col-md-6">
                 <a href="/flight/new">
-                    <button class="btn btn-outline-primary" style="float: right" type="button">Add Flight</button>
+                    <button id = "btnNewFlights" class="btn btn-outline-primary" style="float: right" type="button">Add Flight</button>
                 </a>
             </div>
         </div>
-        <table class="table table-sm">
+        <table id = "tblFlights" class="table table-sm">
             <thead>
             <tr class="table-active">
                 <th scope="col">ID</th>
@@ -52,7 +52,8 @@
                     <td th:text="${flight.aircraft.numberOfSeats - flight.passengers.size() +'/'+ flight.aircraft.numberOfSeats}"></td>
                     <td><a th:href="@{/passengers(flightId=${flight.flightId})}">...</a></td>
                     <td><a th:href="@{/flight/delete(flightId=${flight.flightId})}">
-                        <button class="btn btn-outline-danger btn-sm"
+                        <button name="Cancel flight"
+                                class="btn btn-outline-danger btn-sm"
                                 onclick="alert('Are you sure to cancel this flight?')"
                                 type="button">Cancel
                         </button>
