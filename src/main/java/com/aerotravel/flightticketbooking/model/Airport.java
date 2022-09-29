@@ -22,7 +22,7 @@ public class Airport {
     @Builder.Default
     List<Flight> flights = new ArrayList<>();
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long airportId;
     @Column(unique = true)
     private String airportCode;

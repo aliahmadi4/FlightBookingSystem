@@ -26,7 +26,7 @@ public class Flight {
     @Builder.Default
     List<Passenger> passengers = new ArrayList<>();
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long flightId;
     @Size(max = 30)
     private String flightNumber;
