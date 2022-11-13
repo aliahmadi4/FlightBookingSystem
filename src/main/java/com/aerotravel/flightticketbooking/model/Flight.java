@@ -40,7 +40,7 @@ public class Flight {
     private LocalDate arrivalDate;
     private String departureTime;
     private String arrivalTime;
-    @PositiveOrZero
+    @PositiveOrZero(message = "Shall be positive!")
     private double flightCharge;
 
     public Flight(String flightNumber, Airport departureAirport, Airport destinationAirport,

@@ -2,8 +2,10 @@ package com.aerotravel.flightticketbooking;
 
 import com.aerotravel.flightticketbooking.model.Role;
 import com.aerotravel.flightticketbooking.model.User;
+import com.aerotravel.flightticketbooking.repository.FlightRepository;
 import com.aerotravel.flightticketbooking.repository.RoleRepository;
 import com.aerotravel.flightticketbooking.services.UserService;
+import com.aerotravel.flightticketbooking.services.aux.DataGenService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -35,6 +37,12 @@ public class FlightticketbookingApplication {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    FlightRepository flightRepository;
+
+    @Autowired
+    DataGenService dataGenService;
+
     public static void main(String[] args) {
         SpringApplication.run(FlightticketbookingApplication.class, args);
     }
@@ -43,6 +51,7 @@ public class FlightticketbookingApplication {
     public void postConstructInit() throws InterruptedException {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         createUsersAndRolesIfNeeded();
+        createDataIfNeeded();
     }
 
     public void createUsersAndRolesIfNeeded() {
@@ -61,6 +70,7 @@ public class FlightticketbookingApplication {
 
         var users = userService.getAll();
         createUserIfNeeded(roles, users, "ADMIN", "john", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "JohnTheAdmin@ftb.com", "John", "O.", "Ad-Mi", "Admin user created: {}");
+        createUserIfNeeded(roles, users, "ADMIN", "adm", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "SimplyTheAdmin@ftb.com", "Vasja", "O.", "Stojkov", "Vasja-Admin has joined the chat: {}");
         createUserIfNeeded(roles, users, "AGENT", "mike", "$2a$10$vukSIdxmmtLYcy/uNMBUHeyj/qbNPcaX8lqTbXGciJ9HxaLQOmRO.", "MikeTheAgent@ftb.com", "Mike", "A.", "Gent", "Agent user created: {}");
     }
 
@@ -89,6 +99,14 @@ public class FlightticketbookingApplication {
 
             var result = userService.save(admin);
             log.info(logMsg, result);
+        }
+    }
+
+    private void createDataIfNeeded() {
+        var existingFlights = flightRepository.findAll();
+        if (existingFlights.isEmpty()) {
+            var data = dataGenService.generateAll();
+            log.info("Seems the DB was empty so added some data: \n{}", data);
         }
     }
 }
