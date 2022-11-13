@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.aeroTravel</groupId>
     <artifactId>flightticketbooking</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>flightTicketBooking</name>
     <packaging>jar</packaging>
     <description>Flight ticket booking application for M2P</description>
@@ -33,6 +33,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>

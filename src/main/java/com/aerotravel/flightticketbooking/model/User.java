@@ -28,11 +28,12 @@ public class User {
     @NotBlank(message = "* First Name is required")
     private String firstname;
 
-    @Column(name = "middlename", nullable = true)
+    @Column(name = "middlename")
     private String middlename;
 
     @Column(nullable = false)
     @NotBlank(message = "* Last Name is required")
+    @Size(min = 1, max = 60, message = "Last name shall fit into 60 characters!")
     private String lastname;
 
     @Column(nullable = false, unique = true)

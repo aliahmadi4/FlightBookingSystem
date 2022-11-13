@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -55,7 +56,7 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Attempt to create an entity by using its DTO.")
-    public D create(@RequestBody D entityDto) {
+    public D create(@Valid @RequestBody D entityDto) {
         log.info("Attempting to create a record. {}", entityDto);
         return convertToDto(getService()
                 .save(convertToEntity(entityDto)));
@@ -63,7 +64,7 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @PutMapping("/{id}")
     @Operation(summary = "Attempt to update an entity by using its DTO.")
-    public D update(@RequestBody D entityDto, @PathVariable Long id) {
+    public D update(@Valid @RequestBody D entityDto, @PathVariable Long id) {
         if (entityDto.getId() != id) {
             throw new IllegalArgumentException("Ids mismatch.");
         }
