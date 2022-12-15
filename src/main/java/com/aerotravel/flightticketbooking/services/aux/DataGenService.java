@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class DataGenService {
     public static final int ALMOST_UPPER_BOUND = 12;
     private final AircraftRepository aircraftRepository;
@@ -69,7 +71,7 @@ public class DataGenService {
     }
 
     public List<Aircraft> createAircrafts(Random rnd) {
-        log.info("About to create fake aircrafts.");
+        log.info("\n\tAbout to create fake aircrafts.\n");
         List<Aircraft> aircrafts = new ArrayList<>();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             String model = aviaFaker.aircraft();
@@ -94,6 +96,7 @@ public class DataGenService {
         aircrafts.add(new Aircraft(tupolev, "Tu-154M", 140));
         aircrafts.add(new Aircraft(tupolev, "Tu-134", 110));
         aircrafts.add(new Aircraft(tupolev, "Tu-114", 100));
+        aircrafts.add(new Aircraft(tupolev, "Tu-554", 729));
         aircrafts.add(new Aircraft(il, "Il-86", 230));
         aircrafts.add(new Aircraft(il, "Il-96", 240));
         aircrafts.add(new Aircraft(il, "Il-76", 60));
@@ -120,7 +123,7 @@ public class DataGenService {
     }
 
     public List<Airport> createAirports() {
-        log.info("About to create fake airports.");
+        log.info("\n\tAbout to create fake airports.\n");
         List<Airport> data = new ArrayList<>();
         var codes = new ArrayList<String>();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
@@ -156,14 +159,15 @@ public class DataGenService {
                 .filter(a-> !existingCodes.contains(a.getAirportCode())).collect(Collectors.toList());
         try {
             return airportRepository.saveAll(filteredData);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (null != e.getCause()
                     && null != e.getCause().getCause()
                     &&
                     e.getCause()
                             .getCause()
                             .getMessage().contains("Duplicate entry")) {
-                log.error("Seems there are duplicate airport code upon fake data generating.", e);
+                log.error("Seems there are duplicate airport code upon fake data generating. " +
+                        "That is fine, let's just ignore that.", e);
                 return List.of();
             }
             throw new RuntimeException(e);
@@ -171,12 +175,12 @@ public class DataGenService {
     }
 
     public List<Flight> createFlights(Random rnd, List<Aircraft> aircrafts, List<Airport> airports) {
-        log.info("About to create fake flights.");
+        log.info("\n\tAbout to create fake flights.\n");
         List<Flight> data = new ArrayList<>();
         var aircraftsCount = aircrafts.size();
         var airportsCount = airports.size();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
-            LocalDate depDate = LocalDate.ofInstant(dateFaker.future(1 + Math.abs(rnd.nextInt(144)), TimeUnit.DAYS).toInstant(),
+            var depDate = LocalDate.ofInstant(dateFaker.future(1 + Math.abs(rnd.nextInt(144)), TimeUnit.DAYS).toInstant(),
                     ZoneId.systemDefault());
 
             var entry = Flight.builder()
@@ -198,13 +202,10 @@ public class DataGenService {
     }
 
     public List<Passenger> createPassengers(Random rnd, List<Flight> flights) {
-        log.info("About to create fake passengers.");
+        log.info("\n\tAbout to create fake passengers.\n");
         List<Passenger> data = new ArrayList<>();
         var flightsCount = flights.size();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
-            LocalDate depDate = LocalDate.ofInstant(dateFaker.future(1 + Math.abs(rnd.nextInt(144)), TimeUnit.DAYS).toInstant(),
-                    ZoneId.systemDefault());
-
             var entry = Passenger.builder()
                     .flight(flights.get(Math.abs(rnd.nextInt(flightsCount))))
                     .firstName(nameFaker.firstName())

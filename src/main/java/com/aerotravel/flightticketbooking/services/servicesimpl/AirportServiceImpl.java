@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> implements AirportService {
 
     private final AirportRepository airportRepository;
+    private final String[] sortBy = new String[]{"airportName"};
 
     @Autowired
     public AirportServiceImpl(AirportRepository airportRepository) {
@@ -25,7 +26,7 @@ public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> imple
 
     @Override
     protected String[] getSortByProperties() {
-        return new String[]{"airportName"};
+        return sortBy;
     }
 
     @Override

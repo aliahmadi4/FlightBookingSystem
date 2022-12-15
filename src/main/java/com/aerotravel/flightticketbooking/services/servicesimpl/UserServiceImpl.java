@@ -19,6 +19,7 @@ import java.util.Collection;
 public class UserServiceImpl extends AbstractEntityServiceImpl<User> implements UserService {
 
     private final UserRepository userRepository;
+    private final String[] sortBy = new String[]{"username"};
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -44,6 +45,6 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User> implements 
 
     @Override
     protected String[] getSortByProperties() {
-        return new String[]{"username"};
+        return sortBy;
     }
 }

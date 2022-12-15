@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class PassengerServiceImpl extends AbstractEntityServiceImpl<Passenger> implements PassengerService {
 
     private final PassengerRepository passengerRepository;
+    private final String[] sortBy = new String[]{"lastName"};
 
     @Autowired
     public PassengerServiceImpl(PassengerRepository passengerRepository) {
@@ -24,6 +25,6 @@ public class PassengerServiceImpl extends AbstractEntityServiceImpl<Passenger> i
 
     @Override
     protected String[] getSortByProperties() {
-        return new String[]{"lastName"};
+        return sortBy;
     }
 }

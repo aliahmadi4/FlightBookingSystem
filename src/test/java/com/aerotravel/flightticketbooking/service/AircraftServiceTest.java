@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class AircraftServiceTest {
 
-    Aircraft aircraft = new Aircraft("Boing", "737", 700);
+    final Aircraft aircraft = new Aircraft("Boing", "737", 700);
     @Autowired
     private AircraftService aircraftService;
     @MockBean

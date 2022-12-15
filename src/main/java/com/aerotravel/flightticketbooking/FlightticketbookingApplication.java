@@ -25,13 +25,16 @@ import java.util.stream.Collectors;
 @EnableJpaRepositories("com.aerotravel.flightticketbooking.repository")
 @EntityScan("com.aerotravel.flightticketbooking.model")
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Flight ticket booking API", version = "00.00",
+@OpenAPIDefinition(info = @Info(title = "Flight ticket booking API", version = "00.03",
         contact = @Contact(name = "FTB API Support",
                 url = "http://ya.ru",
                 email = "4ernaja@dyr.a")))
 @Slf4j
 public class FlightticketbookingApplication {
 
+    private final static String logEntryTemplate = "\n\n===================================\n\n" +
+            "\t\t{}" +
+            "\n\n===================================\n\n";
     @Autowired
     UserService userService;
     @Autowired
@@ -55,6 +58,7 @@ public class FlightticketbookingApplication {
     }
 
     public void createUsersAndRolesIfNeeded() {
+        log.info(logEntryTemplate, "Check roles available.");
         var roles = roleRepository.findAll();
         if (roles.isEmpty()) {
             var adminRole = Role.builder()
@@ -63,15 +67,18 @@ public class FlightticketbookingApplication {
             var agentRole = Role.builder()
                     .name("ROLE_AGENT")
                     .build();
+            log.info(logEntryTemplate, "Inserting ADMIN role.");
             roleRepository.save(adminRole);
+            log.info(logEntryTemplate, "Inserting AGENT role.");
             roleRepository.save(agentRole);
             roles = roleRepository.findAll();
         }
 
         var users = userService.getAll();
-        createUserIfNeeded(roles, users, "ADMIN", "john", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "JohnTheAdmin@ftb.com", "John", "O.", "Ad-Mi", "Admin user created: {}");
-        createUserIfNeeded(roles, users, "ADMIN", "adm", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "SimplyTheAdmin@ftb.com", "Vasja", "O.", "Stojkov", "Vasja-Admin has joined the chat: {}");
-        createUserIfNeeded(roles, users, "AGENT", "mike", "$2a$10$vukSIdxmmtLYcy/uNMBUHeyj/qbNPcaX8lqTbXGciJ9HxaLQOmRO.", "MikeTheAgent@ftb.com", "Mike", "A.", "Gent", "Agent user created: {}");
+        log.info(logEntryTemplate, "Check user accounts available.");
+        createUserIfNeeded(roles, users, "ADMIN", "john", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "JohnTheAdmin@ftb.com", "John", "O.", "Ad-Mi", "\n\t\tAdmin user created: {}");
+        createUserIfNeeded(roles, users, "ADMIN", "adm", "$2a$10$dRM33.Fy7SYDraG5vMagXOgIhsB6Tl40VI9pwMlNhB4yfLaZpQj.m", "SimplyTheAdmin@ftb.com", "Vasja", "O.", "Stojkov", "\n\t\tVasja-Admin has joined the chat: {}");
+        createUserIfNeeded(roles, users, "AGENT", "mike", "$2a$10$vukSIdxmmtLYcy/uNMBUHeyj/qbNPcaX8lqTbXGciJ9HxaLQOmRO.", "MikeTheAgent@ftb.com", "Mike", "A.", "Gent", "\n\t\tAgent user created: {}");
     }
 
     private void createUserIfNeeded(List<Role> roles, List<User> users, String roleSign, String username, String password, String email, String name, String middlename, String lastname, String logMsg) {
@@ -97,16 +104,19 @@ public class FlightticketbookingApplication {
                     .roles(List.of(role))
                     .build();
 
+            log.info(logEntryTemplate, "Inserting user, role: " + roleSign);
             var result = userService.save(admin);
             log.info(logMsg, result);
         }
     }
 
     private void createDataIfNeeded() {
+        log.info(logEntryTemplate, "Check Flights available.");
         var existingFlights = flightRepository.findAll();
         if (existingFlights.isEmpty()) {
+            log.info(logEntryTemplate, "Generating and inserting flights etc data.");
             var data = dataGenService.generateAll();
-            log.info("Seems the DB was empty so added some data: \n{}", data);
+            log.info(logEntryTemplate, "Seems the DB was empty so added some data: \n" + data);
         }
     }
 }

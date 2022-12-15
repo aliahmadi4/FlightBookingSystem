@@ -59,9 +59,7 @@ public class AppConfig {
                         .stream()
                         .map(Flight::getFlightId)
                         .collect(Collectors.toList());
-        aircraftTypeMap.addMappings(mappr -> {
-            mappr.using(flightsConverter).map(Aircraft::getFlights, AircraftDto::setFlightIds);
-        });
+        aircraftTypeMap.addMappings(mappr -> mappr.using(flightsConverter).map(Aircraft::getFlights, AircraftDto::setFlightIds));
     }
 
     private void setupUserMappings(ModelMapper mapper) {
@@ -71,8 +69,6 @@ public class AppConfig {
                         .stream()
                         .map(Role::getName)
                         .collect(Collectors.toList());
-        userTypeMap.addMappings(mappr -> {
-            mappr.using(rolesConverter).map(User::getRoles, UserDto::setRoleNames);
-        });
+        userTypeMap.addMappings(mappr -> mappr.using(rolesConverter).map(User::getRoles, UserDto::setRoleNames));
     }
 }

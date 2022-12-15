@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.aeroTravel</groupId>
     <artifactId>flightticketbooking</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <name>flightTicketBooking</name>
     <packaging>jar</packaging>
     <description>Flight ticket booking application for M2P</description>
@@ -110,12 +110,6 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
