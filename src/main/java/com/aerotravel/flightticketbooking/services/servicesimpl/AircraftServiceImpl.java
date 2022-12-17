@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class AircraftServiceImpl extends AbstractEntityServiceImpl<Aircraft> implements AircraftService {
     private final AircraftRepository aircraftRepository;
+    private final String[] sortBy = new String[]{"model"};
 
     @Autowired
     public AircraftServiceImpl(AircraftRepository aircraftRepository) {
@@ -25,7 +26,7 @@ public class AircraftServiceImpl extends AbstractEntityServiceImpl<Aircraft> imp
 
     @Override
     protected String[] getSortByProperties() {
-        return new String[]{"model"};
+        return sortBy;
     }
 
     @Override
