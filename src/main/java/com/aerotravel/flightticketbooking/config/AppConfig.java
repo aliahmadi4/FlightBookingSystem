@@ -5,6 +5,9 @@ import com.aerotravel.flightticketbooking.model.dto.AircraftDto;
 import com.aerotravel.flightticketbooking.model.dto.FlightDto;
 import com.aerotravel.flightticketbooking.model.dto.PassengerDto;
 import com.aerotravel.flightticketbooking.model.dto.UserDto;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -17,6 +20,14 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public ObjectMapper provideObjectMapper(){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        return mapper;
+    }
 
     @Bean
     public ModelMapper modelMapper() {

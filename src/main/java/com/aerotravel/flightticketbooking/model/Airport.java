@@ -1,5 +1,8 @@
 package com.aerotravel.flightticketbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +20,13 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "airportCode")
 public class Airport {
     @OneToMany(mappedBy = "departureAirport")
     @Builder.Default
+    @JsonManagedReference("airport-flights")
     List<Flight> flights = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

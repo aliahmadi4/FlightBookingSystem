@@ -18,7 +18,7 @@
     <properties>
         <java.version>11</java.version>
         <servlet.version>4.0.0</servlet.version>
-        <faker.version>1.0.2</faker.version>
+        <faker.version>1.7.0</faker.version>
     </properties>
 
     <dependencies>
@@ -76,7 +76,14 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!--https://www.baeldung.com/spring-rest-json-patch-->
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-patch</artifactId>
+            <version>1.13</version>
         </dependency>
 
         <dependency>
@@ -92,8 +99,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
             <version>${faker.version}</version>
         </dependency>
 

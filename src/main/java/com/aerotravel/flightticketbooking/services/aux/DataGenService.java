@@ -8,8 +8,12 @@ import com.aerotravel.flightticketbooking.repository.AircraftRepository;
 import com.aerotravel.flightticketbooking.repository.AirportRepository;
 import com.aerotravel.flightticketbooking.repository.FlightRepository;
 import com.aerotravel.flightticketbooking.repository.PassengerRepository;
-import com.github.javafaker.*;
+import net.datafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
+import net.datafaker.providers.base.Address;
+import net.datafaker.providers.base.Aviation;
+import net.datafaker.providers.base.DateAndTime;
+import net.datafaker.providers.base.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,19 +133,25 @@ public class DataGenService {
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             var code = aviaFaker.airport();
             if (codes.contains(code)) {
-                code += code + "`-M";
+                code = faker.bothify("????-?");
             }
-            codes.add(code);
+            if (codes.contains(code)) { // Double-check.
+                code += code + "-M";
+            }
 
-            var entry = Airport.builder()
-                    .airportCode(code)
-                    .airportName(faker.funnyName().name())
-                    .city(addressFaker.city())
-                    .state(addressFaker.state())
-                    .country(addressFaker.country())
-                    .build();
+            if (!codes.contains(code)) {
+                codes.add(code);
 
-            data.add(entry);
+                var entry = Airport.builder()
+                        .airportCode(code)
+                        .airportName(faker.funnyName().name())
+                        .city(addressFaker.city())
+                        .state(addressFaker.state())
+                        .country(addressFaker.country())
+                        .build();
+
+                data.add(entry);
+            }
         }
 
         data.add(new Airport("DAL", "Dallas Love Field", "Dallas", "Dallas", "United States"));
@@ -177,22 +187,20 @@ public class DataGenService {
     public List<Flight> createFlights(Random rnd, List<Aircraft> aircrafts, List<Airport> airports) {
         log.info("\n\tAbout to create fake flights.\n");
         List<Flight> data = new ArrayList<>();
-        var aircraftsCount = aircrafts.size();
-        var airportsCount = airports.size();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             var depDate = LocalDate.ofInstant(dateFaker.future(1 + Math.abs(rnd.nextInt(144)), TimeUnit.DAYS).toInstant(),
                     ZoneId.systemDefault());
 
             var entry = Flight.builder()
-                    .flightNumber(faker.regexify("[A-Z]{2}-\\d{4}"))
+                    .flightNumber(faker.regexify("[A-Z]{2}\\d{4}"))
                     .flightCharge(Double.MAX_EXPONENT * rnd.nextDouble())
-                    .aircraft(aircrafts.get(Math.abs(rnd.nextInt(aircraftsCount))))
+                    .aircraft(getRandomEntity(rnd, aircrafts))
                     .departureDate(depDate)
                     .arrivalDate(depDate.plus(1 + rnd.nextInt(2), ChronoUnit.DAYS))
-                    .departureTime(dateFaker.future(1 + rnd.nextInt(24), TimeUnit.HOURS).toString())
-                    .arrivalTime(dateFaker.future(2 + rnd.nextInt(24), TimeUnit.HOURS).toString())
-                    .departureAirport(airports.get(rnd.nextInt(airportsCount)))
-                    .destinationAirport(airports.get(rnd.nextInt(airportsCount)))
+                    .departureTime(dateFaker.future(1 + rnd.nextInt(36), TimeUnit.HOURS).toString())
+                    .arrivalTime(dateFaker.future(2 + rnd.nextInt(36), TimeUnit.HOURS).toString())
+                    .departureAirport(getRandomEntity(rnd, airports))
+                    .destinationAirport(getRandomEntity(rnd, airports))
                     .build();
 
             data.add(entry);
@@ -204,10 +212,9 @@ public class DataGenService {
     public List<Passenger> createPassengers(Random rnd, List<Flight> flights) {
         log.info("\n\tAbout to create fake passengers.\n");
         List<Passenger> data = new ArrayList<>();
-        var flightsCount = flights.size();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
             var entry = Passenger.builder()
-                    .flight(flights.get(Math.abs(rnd.nextInt(flightsCount))))
+                    .flight(getRandomEntity(rnd, flights))
                     .firstName(nameFaker.firstName())
                     .lastName(nameFaker.lastName())
                     .phoneNumber(faker.phoneNumber().phoneNumber())
@@ -220,5 +227,10 @@ public class DataGenService {
         }
 
         return passengerRepository.saveAll(data);
+    }
+
+    private <R> R getRandomEntity(Random rnd, List<R> entities) {
+        var index = rnd.nextInt(entities.size());
+        return entities.get(index);
     }
 }

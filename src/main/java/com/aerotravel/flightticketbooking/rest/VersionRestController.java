@@ -1,7 +1,8 @@
 package com.aerotravel.flightticketbooking.rest;
 
-import com.github.javafaker.Faker;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import net.datafaker.Faker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/api")
+@Tag(name = "Version", description = "This is the way to get app/API version info.")
 public class VersionRestController {
 
     @GetMapping("/version")
@@ -18,11 +20,12 @@ public class VersionRestController {
     public String getVersionInfo() {
         var faker = new Faker(Locale.ENGLISH);
         // TODO(L.E.): Invent something more elegant one day.
-        return String.format("As of %s the application version is 0.5 and the API version is 0.03 \n\n" +
-                                "Meanwhile %s thinks it is time to read '%s'. In any case '%s'.",
+        return String.format("As of %s the application version is 0.7 and the API version is 00.05 \n\n" +
+                                "Meanwhile %s %s thinks it is time to read '%s'. Or fly to %s using some %s.",
                         LocalDateTime.now(),
-                        faker.cat().name(),
+                        faker.cat().breed(), faker.cat().name(),
                         faker.book().title(),
-                        faker.shakespeare().hamletQuote());
+                        faker.aviation().airport(),
+                        faker.aviation().aircraft());
     }
 }

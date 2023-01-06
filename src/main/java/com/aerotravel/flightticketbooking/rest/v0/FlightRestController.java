@@ -7,6 +7,7 @@ import com.aerotravel.flightticketbooking.model.dto.FlightDto;
 import com.aerotravel.flightticketbooking.model.dto.PassengerDto;
 import com.aerotravel.flightticketbooking.services.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v0/flights")
+@Tag(name = "Flight", description = "Flight resource. Flight booking is possible as well!")
 @Slf4j
 public class FlightRestController extends AbstractRestController<Flight, FlightDto> {
 
@@ -39,6 +41,11 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     @Override
     protected EntityService<Flight> getService() {
         return flightService;
+    }
+
+    @Override
+    protected Class<Flight> getEntityClass() {
+        return Flight.class;
     }
 
     @Override

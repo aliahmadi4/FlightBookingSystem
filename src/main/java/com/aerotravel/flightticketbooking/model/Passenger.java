@@ -1,5 +1,8 @@
 package com.aerotravel.flightticketbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +18,9 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "passportNumber")
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +46,7 @@ public class Passenger {
     private String address;
 
     @ManyToOne
+    @JsonBackReference("flight-passengers")
     private Flight flight;
 
     public Passenger(String firstName, String lastName, String phoneNumber, String passportNumber, String email, String address) {

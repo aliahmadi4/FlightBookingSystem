@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new aircraft</title>
+    <title>Remove old aircraft</title>
     <div th:replace="layout/master-page :: header-css"/>
     <style type="text/css"></style>
 </head>
@@ -15,13 +15,15 @@
         <div class="row">
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 10px">
-                    <h1 style="color: darkblue">Add New Aircraft </h1>
+                    <h1 style="color: darkblue">Edit Aircraft</h1>
                 </div>
 
             </div>
         </div>
 
-        <form action="/aircraft/new" method="post" th:object="${aircraft}">
+        <form action="#" method="post"
+              th:action="@{/aircraft/edit/(aircraftId=${aircraft.aircraftId})}"
+              th:object="${aircraft}">
             <div class="row justify-content-md-center">
                 <div class="col-md-6">
 
@@ -50,7 +52,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button id = "btnSave" class="btn btn-success" style="float: right" type="submit">Save</button>
+                        <button id = "btnSave" class="btn btn-success" style="float: left" type="submit">Save</button>
                     </div>
 
                 </div>

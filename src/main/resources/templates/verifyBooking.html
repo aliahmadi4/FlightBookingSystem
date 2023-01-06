@@ -16,8 +16,7 @@
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 10px">
                     <h1 style="color: darkblue">Verify Booking</h1>
-                    <p>In order to verify your ticket please insert your Flight Id and Passenger Id in provided
-                        fields.</p>
+                    <p>In order to verify your ticket please provide your Flight Id and Passenger Id below.</p>
                 </div>
 
             </div>
@@ -49,13 +48,14 @@
         <div class="row">
             <th:block th:if="${notFound !=null}">
                 <div class="col-12">
-                    <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">No Record Found!</p>
+                    <p style="text-align: center; margin-top: 30px; color: red; font-weight: bold">
+                        <span th:text="${notFound}"></span>
+                    </p>
                 </div>
             </th:block>
             <th:block th:if="${passenger !=null}">
                 <div class="col-12" style="margin-bottom: 10px">
                     <p style="color: green; font-weight: bold">Verified Successfully!</p>
-
 
                 </div>
                 <hr/>
@@ -117,7 +117,7 @@
                 <th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_AGENT')">
                     <form action="/flight/book/cancel" method="post">
                         <input name="passengerId" th:value="${passenger.passengerId}" type="hidden">
-                        <button id = "btnCancel" class="btn btn-sm btn-danger" type="submit">Cancel This Ticket</button>
+                        <button id = "btnCancel" class="btn btn-sm btn-danger" type="submit">Cancel booking</button>
                     </form>
                 </th:block>
             </th:block>

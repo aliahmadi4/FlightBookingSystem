@@ -2,15 +2,21 @@ package com.aerotravel.flightticketbooking.services;
 
 import com.aerotravel.flightticketbooking.exception.EntityNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EntityService<E> {
     Page<E> getAllPaged(int pageNum);
 
+    Page<E> getPaged(Pageable pageable);
+
     List<E> getAll();
 
     E getById(Long id);
+
+    Optional<E> getOptionallyById(Long id);
 
     List<E> getAllById(List<Long> ids);
 

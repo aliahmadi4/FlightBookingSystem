@@ -4,6 +4,7 @@ import com.aerotravel.flightticketbooking.model.Airport;
 import com.aerotravel.flightticketbooking.model.dto.AirportDto;
 import com.aerotravel.flightticketbooking.services.AirportService;
 import com.aerotravel.flightticketbooking.services.EntityService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v0/airports")
+@Tag(name = "Airport", description = "Airport resource, CRUD operations")
 public class AirportRestController extends AbstractRestController<Airport, AirportDto> {
 
     private final AirportService airportService;
@@ -23,6 +25,11 @@ public class AirportRestController extends AbstractRestController<Airport, Airpo
     @Override
     protected EntityService<Airport> getService() {
         return airportService;
+    }
+
+    @Override
+    protected Class<Airport> getEntityClass() {
+        return Airport.class;
     }
 
     protected AirportDto convertToDto(Airport airport) {

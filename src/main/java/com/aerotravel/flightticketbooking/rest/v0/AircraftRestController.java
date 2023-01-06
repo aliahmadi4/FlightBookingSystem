@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v0/aircrafts")
+@Tag(name = "Aircraft", description = "Aircraft resource")
 @Slf4j
 public class AircraftRestController extends AbstractRestController<Aircraft, AircraftDto> {
     private final AircraftService aircraftService;
@@ -35,6 +37,11 @@ public class AircraftRestController extends AbstractRestController<Aircraft, Air
     @Override
     protected EntityService<Aircraft> getService() {
         return aircraftService;
+    }
+
+    @Override
+    protected Class<Aircraft> getEntityClass() {
+        return Aircraft.class;
     }
 
     @Override

@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -35,7 +32,6 @@ public class MainController {
     @Autowired
     PassengerService passengerService;
 
-
     @GetMapping("/")
     public String showHomePage() {
         return "index";
@@ -45,6 +41,26 @@ public class MainController {
     public String showAddAirportPage(Model model) {
         model.addAttribute("airport", new Airport());
         return "newAirport";
+    }
+
+    @GetMapping("/airport/edit")
+    public String showEditAirport(@PathParam("airportId") long airportId, Model model) {
+        var record = airportService.getById(airportId);
+
+        model.addAttribute("airport", record);
+        return "editAirport";
+    }
+
+    @PostMapping("/airport/edit")
+    public String editAirport(@PathParam("airportId") long airportId, @Valid Airport airport,
+                               BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            airport.setAirportId(airportId);
+            return "editAirport";
+        }
+
+        airportService.save(airport);
+        return "redirect:/airports";
     }
 
     @PostMapping("/airport/new")
@@ -92,6 +108,26 @@ public class MainController {
         model.addAttribute("aircrafts", aircraftService.getAllPaged(0));
         model.addAttribute("currentPage", 0);
         return "aircrafts";
+    }
+
+    @GetMapping("/aircraft/edit")
+    public String showEditAircraft(@PathParam("aircraftId") long aircraftId, Model model) {
+        var record = aircraftService.getById(aircraftId);
+
+        model.addAttribute("aircraft", record);
+        return "editAircraft";
+    }
+
+    @PostMapping("/aircraft/edit")
+    public String editAircraft(@PathParam("aircraftId") long aircraftId, @Valid Aircraft aircraft,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            aircraft.setAircraftId(aircraftId);
+            return "editAircraft";
+        }
+
+        aircraftService.save(aircraft);
+        return "redirect:/aircrafts";
     }
 
     @GetMapping("/aircraft/delete")
@@ -166,6 +202,13 @@ public class MainController {
         model.addAttribute("flights", flightService.getAllPaged(pageNo));
         model.addAttribute("currentPage", pageNo);
         return "flights";
+    }
+
+    @GetMapping("/flights_list")
+    public String showSimpleFlightsList(@RequestParam(defaultValue = "0") int pageNo, Model model) {
+        model.addAttribute("flights", flightService.getAllPaged(pageNo));
+        model.addAttribute("currentPage", pageNo);
+        return "flights_list";
     }
 
     @GetMapping("/flight/search")
@@ -259,10 +302,11 @@ public class MainController {
                                               @RequestParam("passengerId") long passengerId,
                                               Model model) {
 
-        Flight flight = flightService.getById(flightId);
-        if (flight != null) {
+        var flightOptional = flightService.getOptionallyById(flightId);
+        if (flightOptional.isPresent()) {
+            var flight = flightOptional.get();
             model.addAttribute("flight", flight);
-            List<Passenger> passengers = flight.getPassengers();
+            var passengers = flight.getPassengers();
             Passenger passenger = null;
             for (Passenger p : passengers) {
                 if (p.getPassengerId() == passengerId) {
@@ -270,16 +314,13 @@ public class MainController {
                     model.addAttribute("passenger", passenger);
                 }
             }
-            if (passenger != null) {
-                return "verifyBooking";
-            } else {
-                model.addAttribute("notFound", "Not Found");
-                return "verifyBooking";
+            if (passenger == null) {
+                model.addAttribute("notFound", "Passenger " + passengerId + " was Not Found");
             }
         } else {
-            model.addAttribute("notFound", "Not Found");
-            return "verifyBooking";
+            model.addAttribute("notFound", "Flight " + flightId + " was Not Found");
         }
+        return "verifyBooking";
 
     }
 
