@@ -46,7 +46,7 @@ e.g.
 
 # TODO:
 
-- UI: (Admin) Edit Aircrafts, Airports, Flights.
+- UI: (Admin) Flights.
 - Cleanup documentation.
 - Add more unit and integration tests.
 - REST API: use merge on update instead of save.
