@@ -3,10 +3,12 @@ package com.aerotravel.flightticketbooking.services.servicesimpl;
 import com.aerotravel.flightticketbooking.services.EntityService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 abstract class AbstractEntityServiceImpl<E> implements EntityService<E> {
 
@@ -22,6 +24,11 @@ abstract class AbstractEntityServiceImpl<E> implements EntityService<E> {
     }
 
     @Override
+    public Page<E> getPaged(Pageable pageable) {
+        return getRepository().findAll(pageable);
+    }
+
+    @Override
     public List<E> getAll() {
         return getRepository().findAll();
     }
@@ -31,6 +38,13 @@ abstract class AbstractEntityServiceImpl<E> implements EntityService<E> {
         if (null == entityId) throw new IllegalArgumentException("Entity ID shall be null.");
 
         return getRepository().findById(entityId).orElseThrow(() -> buildEntityNotFoundException(entityId));
+    }
+
+    @Override
+    public Optional<E> getOptionallyById(Long entityId) {
+        if (null == entityId) throw new IllegalArgumentException("Entity ID shall be null.");
+
+        return getRepository().findById(entityId);
     }
 
     @Override

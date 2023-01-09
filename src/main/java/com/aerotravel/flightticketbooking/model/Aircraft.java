@@ -1,5 +1,8 @@
 package com.aerotravel.flightticketbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +22,9 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "aircraftId")
 public class Aircraft {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +38,7 @@ public class Aircraft {
     private Integer numberOfSeats;
     @OneToMany(mappedBy = "aircraft")
     @Builder.Default
+    @JsonManagedReference("aircraft-flights")
     private List<Flight> flights = new ArrayList<>();
 
     public Aircraft(String manufacturer, String model, Integer numberOfSeats) {

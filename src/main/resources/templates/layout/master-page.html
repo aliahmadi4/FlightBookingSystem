@@ -31,6 +31,11 @@
                 <li class="nav-item active">
                     <a id = "aHome" class="nav-link" href="/">Home</a>
                 </li>
+                <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+                    <li class="nav-item">
+                        <a id = "aFlightsList" class="nav-link" href="/flights_list">Flights</a>
+                    </li>
+                </th:block>
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                     <li class="nav-item">
                         <a id = "aAirports" class="nav-link" href="/airports">Airports</a>
@@ -56,6 +61,7 @@
                 </li>
 
             </ul>
+
             <div class="navbar-right col-md-6">
                 <div sec:authorize="isAuthenticated()" style="float: right">
                     <svg class="bi bi-person-circle" fill="white" height="25" viewBox="0 0 16 16"

@@ -32,6 +32,7 @@
                 <th scope="col">State</th>
                 <th scope="col">Country</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +48,11 @@
                         <button class="btn btn-outline-danger btn-sm"
                                 onclick="alert('are you sure you want to delete?')"
                                 type="button">Delete
+                        </button>
+                    </a></td>
+                    <td><a th:href="@{/airport/edit(airportId=${airport.airportId})}">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                type="button">Edit
                         </button>
                     </a></td>
                 </tr>

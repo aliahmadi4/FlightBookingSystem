@@ -30,6 +30,7 @@
                 <th scope="col">Model</th>
                 <th scope="col">Number of seats</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +40,11 @@
                     <td th:text="${aircraft.manufacturer}"></td>
                     <td th:text="${aircraft.model}"></td>
                     <td th:text="${aircraft.numberOfSeats}"></td>
+                    <td><a th:href="@{/aircraft/edit(aircraftId=${aircraft.aircraftId})}">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                type="button">Edit
+                        </button>
+                    </a></td>
                     <td><a th:href="@{/aircraft/delete(aircraftId=${aircraft.aircraftId})}">
                         <button class="btn btn-outline-danger btn-sm"
                                 onclick="alert('Are you sure you want to delete?')"

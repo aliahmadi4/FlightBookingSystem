@@ -1,5 +1,9 @@
 package com.aerotravel.flightticketbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -19,20 +24,28 @@ import java.util.stream.Collectors;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "flightNumber")
 public class Flight {
     @ManyToOne
+    @JsonBackReference("aircraft-flights")
     Aircraft aircraft;
     @OneToMany(mappedBy = "flight")
     @Builder.Default
+    @JsonManagedReference("flight-passengers")
     List<Passenger> passengers = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long flightId;
     @Size(max = 30)
+    @NotBlank
     private String flightNumber;
     @ManyToOne
+    @JsonBackReference("airport-flights")
     private Airport departureAirport;
     @ManyToOne
+    @JsonBackReference
     private Airport destinationAirport;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate departureDate;
