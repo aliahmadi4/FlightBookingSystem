@@ -30,11 +30,10 @@ import java.util.stream.Collectors;
 @Validated
 public class FlightRestController extends AbstractRestController<Flight, FlightDto> {
 
+    private final static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final FlightService flightService;
     private final AirportService airportService;
-
     private final AircraftService aircraftService;
-
     private final PassengerService passengerService;
 
     @Autowired
@@ -131,18 +130,24 @@ public class FlightRestController extends AbstractRestController<Flight, FlightD
     public ResponseEntity<List<FlightDto>> findByAirportAndDepartureTime(
             @RequestParam("departureAirportCode") String departureAirportCode,
             @RequestParam("destinationAirportCode") String destinationAirportCode,
-            @RequestParam("departureDate") String departureDate) {
-        log.info("Searching for flights from {} to {} on {}.", departureDate, destinationAirportCode, departureDate);
+            @RequestParam(value = "departureDate", defaultValue = "2023-01-01") String departureDate) {
+        log.info("Searching for flights from {} to {} on {}.", departureAirportCode, destinationAirportCode, departureDate);
         var depAirport = airportService.getByCode(departureAirportCode);
         var destAirport = airportService.getByCode(destinationAirportCode);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate deptDate = LocalDate.parse(departureDate, dtf);
+        if (null != departureDate && departureDate.length() > 9) {
+            var deptDate = LocalDate.parse(departureDate, DATE_TIME_FORMATTER);
 
-        return ResponseEntity.ok(flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptDate)
-                .stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList()));
+            return ResponseEntity.ok(flightService.getAllByAirportAndDepartureTime(depAirport, destAirport, deptDate)
+                    .stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList()));
+        } else {
+            return ResponseEntity.ok(flightService.getAllByAirports(depAirport, destAirport)
+                    .stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList()));
+        }
     }
 
     @PostMapping("/book/{flightId}")

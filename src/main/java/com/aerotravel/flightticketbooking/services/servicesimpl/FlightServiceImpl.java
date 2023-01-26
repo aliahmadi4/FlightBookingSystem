@@ -40,6 +40,11 @@ public class FlightServiceImpl extends AbstractEntityServiceImpl<Flight> impleme
     }
 
     @Override
+    public List<Flight> getAllByAirports(Airport depAirport, Airport destAirport) {
+        return flightRepository.findAllByDepartureAirportEqualsAndDestinationAirportEquals(depAirport, destAirport);
+    }
+
+    @Override
     public List<Flight> getAllByByFlightNumber(String flightNumber) {
         return flightRepository.findByFlightNumber(flightNumber);
     }

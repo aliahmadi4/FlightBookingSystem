@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FlightService extends EntityService<Flight> {
     List<Flight> getAllByAirportAndDepartureTime(Airport depAirport, Airport destAirport, LocalDate depDate);
+    List<Flight> getAllByAirports(Airport depAirport, Airport destAirport);
 
     List<Flight> getAllByByFlightNumber(String flightNumber);
 
