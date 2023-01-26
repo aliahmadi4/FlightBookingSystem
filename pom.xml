@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.aeroTravel</groupId>
     <artifactId>flightticketbooking</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <name>flightTicketBooking</name>
     <packaging>jar</packaging>
     <description>Flight ticket booking application for M2P</description>
