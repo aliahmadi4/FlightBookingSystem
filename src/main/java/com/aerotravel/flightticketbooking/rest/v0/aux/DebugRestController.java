@@ -31,7 +31,7 @@ public class DebugRestController {
 
     @GetMapping("/show")
     @Operation(summary = "Get debug info.")
-    public String generate() throws JsonProcessingException {
+    public String show() throws JsonProcessingException {
         var data = new TreeMap<String, Object>();
         data.put("Active profiles", environment.getActiveProfiles());
 

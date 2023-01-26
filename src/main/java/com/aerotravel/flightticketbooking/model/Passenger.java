@@ -37,11 +37,9 @@ public class Passenger {
     @NotBlank
     @Size(max = 30)
     private String passportNumber;
-
     @Email
     @Size(max = 300)
     private String email;
-
     @Size(max = 300)
     private String address;
 

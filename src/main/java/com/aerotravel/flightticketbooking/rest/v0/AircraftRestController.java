@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v0/aircrafts")
 @Tag(name = "Aircraft", description = "Aircraft resource")
 @Slf4j
+@Validated
 public class AircraftRestController extends AbstractRestController<Aircraft, AircraftDto> {
     private final AircraftService aircraftService;
     private final FlightService flightService;

@@ -7,12 +7,14 @@ import com.aerotravel.flightticketbooking.services.FlightService;
 import com.aerotravel.flightticketbooking.services.PassengerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v0/passengers")
 @Tag(name = "Passenger", description = "Passenger resource.")
+@Validated
 public class PassengerRestController extends AbstractRestController<Passenger, PassengerDto> {
     private final PassengerService passengerService;
 

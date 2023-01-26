@@ -1,5 +1,6 @@
 package com.aerotravel.flightticketbooking.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class UserDto implements IdedEntity {
     private List<String> roleNames = new ArrayList<>();
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public long getId() {
         return id;
     }

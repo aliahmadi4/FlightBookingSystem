@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,7 @@ public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long flightId;
-    @Size(max = 30)
+    @Size(max = 30, message = "Not longer than 30 characters please!")
     @NotBlank
     private String flightNumber;
     @ManyToOne
@@ -48,10 +46,14 @@ public class Flight {
     @JsonBackReference
     private Airport destinationAirport;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent
     private LocalDate departureDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent
     private LocalDate arrivalDate;
+    @NotBlank
     private String departureTime;
+    @NotBlank
     private String arrivalTime;
     @PositiveOrZero(message = "Shall be positive!")
     private double flightCharge;

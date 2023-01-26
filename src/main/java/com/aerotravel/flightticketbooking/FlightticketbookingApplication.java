@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @EnableJpaRepositories("com.aerotravel.flightticketbooking.repository")
 @EntityScan("com.aerotravel.flightticketbooking.model")
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Flight ticket booking API", version = "00.05",
+@OpenAPIDefinition(info = @Info(title = "Flight ticket booking API", version = "00.06",
         contact = @Contact(name = "FTB API Support",
                 url = "http://ya.ru",
                 email = "4ernaja@dyr.a")))

@@ -1,6 +1,5 @@
 package com.aerotravel.flightticketbooking.rest.v0;
 
-import com.aerotravel.flightticketbooking.exception.EntityNotFoundException;
 import com.aerotravel.flightticketbooking.model.dto.IdedEntity;
 import com.aerotravel.flightticketbooking.services.EntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,12 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Validated
 public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @Autowired
@@ -31,6 +32,7 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
     private ObjectMapper objectMapper;
 
     protected abstract EntityService<E> getService();
+
     protected abstract Class<E> getEntityClass();
 
     protected abstract D convertToDto(E entity);
@@ -39,24 +41,24 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @GetMapping
     @Operation(summary = "Get all entities available.")
-    public Iterable<D> findAll() {
-        log.debug("Getting all records.");
-        return getService()
+    public ResponseEntity<Iterable<D>> findAll() {
+        log.info("Getting all records.");
+        return ResponseEntity.ok(getService()
                 .getAll()
                 .stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/page/{number}")
     @Operation(summary = "Get entities available on the page.")
-    public Iterable<D> findAllPaged(@PathVariable int number) {
-        log.debug("Getting all records on page {}.", number);
-        return getService()
+    public ResponseEntity<Iterable<D>> findAllPaged(@PathVariable int number) {
+        log.info("Getting all records on page {}.", number);
+        return ResponseEntity.ok(getService()
                 .getAllPaged(number)
                 .stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/paged")
@@ -67,31 +69,31 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get an entity by its id.")
-    public D findById(@PathVariable Long id) {
+    public ResponseEntity<D> findById(@PathVariable Long id) {
         log.info("Getting a record by id={}.", id);
-        return convertToDto(getService().getById(id));
+        return ResponseEntity.ok(convertToDto(getService().getById(id)));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Attempt to create an entity by using its DTO.")
-    public D create(@Valid @RequestBody D entityDto) {
-        log.info("Attempting to create a record. {}", entityDto);
-        return convertToDto(getService()
-                .save(convertToEntity(entityDto)));
+    public ResponseEntity<D> create(@Valid @RequestBody D entityDto) {
+        log.info("Attempting to create a {} record. {}", getEntityClass().getSimpleName(), entityDto);
+        return new ResponseEntity<>(convertToDto(getService()
+                .save(convertToEntity(entityDto))), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Attempt to update an entity by using its DTO.")
-    public D update(@Valid @RequestBody D entityDto, @PathVariable Long id) {
+    public ResponseEntity<D> update(@Valid @RequestBody D entityDto, @PathVariable Long id) {
+        log.info("Attempting to update the {} record. {}", getEntityClass().getSimpleName(), entityDto);
         if (entityDto.getId() != id) {
-            throw new IllegalArgumentException("Ids mismatch.");
+            entityDto.setId(id);
         }
-        log.info("Attempting to update the record. {}", entityDto);
+
         // Check whether it exists at all.
         getService().getById(id);
 
-        //TODO: Think about merging not re-writing.
         return create(entityDto);
     }
 
@@ -129,11 +131,13 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Attempt to delete an entity by its id.")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         log.info("Attempting to delete record {}", id);
         // Check whether it exists at all.
         getService().getById(id);
         getService().deleteById(id);
+
+        return ResponseEntity.ok(String.format("Deleted %s by Id=%s", getEntityClass().getSimpleName(), id));
     }
 }
 

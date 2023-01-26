@@ -7,8 +7,10 @@ import com.aerotravel.flightticketbooking.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public class AirportServiceImpl extends AbstractEntityServiceImpl<Airport> implements AirportService {
 
     private final AirportRepository airportRepository;

@@ -1,4 +1,10 @@
 --------------
+Izvod 0.75 / API 00.06
+- API
+  - Improved validation and error handling.
+- GUI
+  - Improved logging.
+--------------
 Izvod 0.7 / API 00.05
 - API
   - Added ``GET /paged`` operation, so it is possible now to specify page number, size etc.

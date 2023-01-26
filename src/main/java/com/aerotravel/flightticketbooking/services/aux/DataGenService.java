@@ -188,7 +188,7 @@ public class DataGenService {
         log.info("\n\tAbout to create fake flights.\n");
         List<Flight> data = new ArrayList<>();
         for (int i = 0; i < ALMOST_UPPER_BOUND; i++) {
-            var depDate = LocalDate.ofInstant(dateFaker.future(1 + Math.abs(rnd.nextInt(144)), TimeUnit.DAYS).toInstant(),
+            var depDate = LocalDate.ofInstant(dateFaker.future(1 + rnd.nextInt(144), TimeUnit.DAYS).toInstant(),
                     ZoneId.systemDefault());
 
             var entry = Flight.builder()
@@ -196,7 +196,7 @@ public class DataGenService {
                     .flightCharge(Double.MAX_EXPONENT * rnd.nextDouble())
                     .aircraft(getRandomEntity(rnd, aircrafts))
                     .departureDate(depDate)
-                    .arrivalDate(depDate.plus(1 + rnd.nextInt(2), ChronoUnit.DAYS))
+                    .arrivalDate(depDate.plus(rnd.nextInt(2), ChronoUnit.DAYS))
                     .departureTime(dateFaker.future(1 + rnd.nextInt(36), TimeUnit.HOURS).toString())
                     .arrivalTime(dateFaker.future(2 + rnd.nextInt(36), TimeUnit.HOURS).toString())
                     .departureAirport(getRandomEntity(rnd, airports))
