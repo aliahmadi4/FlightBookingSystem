@@ -49,4 +49,3 @@ e.g.
 - UI: (Admin) Flights.
 - Cleanup documentation.
 - Add more unit and integration tests.
-- REST API: use merge on update instead of save.

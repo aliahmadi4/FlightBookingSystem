@@ -50,10 +50,10 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-form-label" for="state">State</label>
+                    <label class="col-form-label" for="state">Region</label>
                     <span class="badge badge-danger" th:errors="*{state}"
                           th:if="${#fields.hasErrors('state')}"></span>
-                    <input class="form-control" id="state" name="state" placeholder=""
+                    <input class="form-control" id="state" name="region" placeholder=""
                            required th:value="${airport.state}" type="text">
                 </div>
 

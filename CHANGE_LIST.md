@@ -1,3 +1,8 @@
+Izvod 0.8 / API 00.062
+- API
+  - Improved DELETE and VERSION responses - a DTO is now used instead of plain String.
+- GUI
+  - Minor renamings.
 --------------
 Izvod 0.75 / API 00.06
 - API

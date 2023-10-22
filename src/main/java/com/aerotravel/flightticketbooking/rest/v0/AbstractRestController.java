@@ -1,5 +1,6 @@
 package com.aerotravel.flightticketbooking.rest.v0;
 
+import com.aerotravel.flightticketbooking.model.dto.ApiResponse;
 import com.aerotravel.flightticketbooking.model.dto.IdedEntity;
 import com.aerotravel.flightticketbooking.services.EntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,7 +21,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 @Slf4j
 @Validated
@@ -131,13 +135,18 @@ public abstract class AbstractRestController<E, D extends IdedEntity> {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Attempt to delete an entity by its id.")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
         log.info("Attempting to delete record {}", id);
         // Check whether it exists at all.
         getService().getById(id);
         getService().deleteById(id);
 
-        return ResponseEntity.ok(String.format("Deleted %s by Id=%s", getEntityClass().getSimpleName(), id));
+        return ResponseEntity.ok(
+                ApiResponse.of()
+                        .code(SC_OK)
+                        .message(String.format("Deleted %s by Id=%s", getEntityClass().getSimpleName(), id))
+                        .details(Map.of("Id", String.valueOf(id)))
+                        .build());
     }
 }
 

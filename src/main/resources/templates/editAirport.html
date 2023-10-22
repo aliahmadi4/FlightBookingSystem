@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-form-label" for="city">City</label>
+                    <label class="col-form-label" for="city">Polis</label>
                     <span class="badge badge-danger" th:errors="*{city}"
                           th:if="${#fields.hasErrors('city')}"></span>
                     <input class="form-control" id="city" name="city" placeholder=""
@@ -52,10 +52,10 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-form-label" for="state">State</label>
+                    <label class="col-form-label" for="state">County</label>
                     <span class="badge badge-danger" th:errors="*{state}"
                           th:if="${#fields.hasErrors('state')}"></span>
-                    <input class="form-control" id="state" name="state" placeholder=""
+                    <input class="form-control" id="state" name="county" placeholder=""
                            required th:value="${airport.state}" type="text">
                 </div>
 
